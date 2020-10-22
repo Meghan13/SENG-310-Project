@@ -8,6 +8,7 @@ screen = pygame.display.set_mode((800,600))
 
 running = True
 rect1 = pygame.Rect((100, 100),(100, 100))
+rect2 = pygame.Rect((100, 100),(100, 200))
 
 
 
