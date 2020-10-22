@@ -40,13 +40,13 @@ while running:
                 down = False
         if event.type == pygame.QUIT:
             running = False
-    if right:
+    if right and rect1.right < 800:
         rect1.x = rect1.x + 1
-    if left:
+    if left and rect1.left > 0:
         rect1.x = rect1.x - 1
-    if down:
+    if down and rect1.bottom < 600:
         rect1.y = rect1.y + 1
-    if up:
+    if up and rect1.top > 0:
         rect1.y = rect1.y - 1
     screen.fill(pygame.Color(0, 0, 0))
     pygame.draw.rect(screen, pygame.Color(100, 0, 0), rect1)
