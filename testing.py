@@ -1,6 +1,6 @@
 #Testing git pushes
 
-name_list = ["Meghan", "Ben", "BenoM","Test"]
+name_list = ["Meghan", "Ben", "BenoM","Andrew"]
 
 for name in name_list:
     print(f'Team names: {name}')
