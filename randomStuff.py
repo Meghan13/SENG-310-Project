@@ -19,7 +19,7 @@ def hello_world(sort_option):
     if sort_option == 2:
         item.sort(reverse=True, key=byNum)
 
-    rect_coords = (10, 10)
+    rect_coords = (0, 0)
     for i in item:
         print(i)
 
