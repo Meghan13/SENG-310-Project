@@ -9,7 +9,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 def hello_world(sort_option):
     print("Ben K Wrote This")
     item = [("Matthew", 5, pygame.Rect((10, 10), (10, 10))), ("Andrew", 53, pygame.Rect((30, 10), (10, 10))),
-            ("Ben K", 10, pygame.Rect((50, 10), (10, 10))), ("Meghan", 22, pygame.Rect((50, 10), (10, 10))),
+            ("Ben K", 10, pygame.Rect((50, 10), (10, 10))), ("Meghfdsafsdan", 22, pygame.Rect((50, 10), (10, 10))),
             ("Ben M", 543216, pygame.Rect((50, 10), (10, 10)))]
     if sort_option == 0:
         item.sort(key=byName)
