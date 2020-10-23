@@ -4,7 +4,10 @@ import pygame
 pygame.init()
 
 #Create the screen
+
 screen = pygame.display.set_mode((800,600))
+clock = pygame.time.Clock()
+clock.tick(15)
 
 running = True
 rect1 = pygame.Rect((100, 100), (100, 100))
@@ -16,6 +19,7 @@ up = False
 down = False
 
 while running:
+
     for event in pygame.event.get():
         #Check if key was pressed
         if event.type == pygame.KEYDOWN:
