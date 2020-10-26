@@ -22,9 +22,9 @@ item1 = item.Item(0, "Name", "This is an item", 20, (10, 10), "/Assets/temp.png"
 while running:
     rect2 = item1.get_rect()
     for event in pygame.event.get():
-        #Check if key was pressed
+        # Check if key was pressed
         if event.type == pygame.KEYDOWN:
-            #Check direction
+            # Check direction
             if event.key == pygame.K_d:
                 right = True
             if event.key == pygame.K_a:
