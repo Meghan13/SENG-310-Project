@@ -1,9 +1,8 @@
 import pygame
-
-#Intialize the pygame
-pygame.init()
+import Code.item
 
 #Create the screen
+from Code import item
 
 screen = pygame.display.set_mode((800,600))
 clock = pygame.time.Clock()
@@ -18,8 +17,10 @@ left = False
 up = False
 down = False
 
-while running:
+item1 = item.Item(0, "Name", "This is an item", 20, (10, 10), "/Assets/temp.png")
 
+while running:
+    rect2 = item1.get_rect()
     for event in pygame.event.get():
         #Check if key was pressed
         if event.type == pygame.KEYDOWN:
@@ -53,5 +54,5 @@ while running:
     if up and rect1.top > 0:
         rect1.y = rect1.y - 1
     screen.fill(pygame.Color(0, 0, 0))
-    pygame.draw.rect(screen, pygame.Color(100, 0, 0), rect1)
+    pygame.draw.rect(screen, pygame.Color(100, 0, 0), rect2)
     pygame.display.update()
