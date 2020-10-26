@@ -89,8 +89,13 @@ class Item:
         # compare the coordinates of the mouse and the items rect
         return self.rect.left < m_pos[0] < self.rect.right and self.rect.top < m_pos[1] < self.rect.bottom
 
-    font = pygame.font.Font("freesansbold.ttf", 12)  # change this to change font and font size
+    # Scales an item rect and image separately in x and y
+    def scale(self, x_scale: float, y_scale: float):
+        self.WIDTH = int(self.WIDTH * x_scale)
+        self.HEIGHT = int(self.HEIGHT * y_scale)
+        self.image = pygame.transform.scale(self.image, (self.WIDTH, self.HEIGHT))
 
+    font = pygame.font.Font("freesansbold.ttf", 12)  # change this to change font and font size
     i_id = None   # unique item id
     name = None   # item name
     info = None   # item description
@@ -109,12 +114,9 @@ screen = pygame.display.set_mode((800, 600))
 running = True
 
 # Add three items to a list of items
-items = [Item(0, "Sword", "An ancient sword passed down through your family",
-              1, (0, 0), "../Assets/sword.png"),
-         Item(1, "Apple", "An apple picked fresh from a tree",
-              32, (0, 0), "../Assets/apple.png"),
-         Item(1, "Gem", "A precious gemstone", 3,
-                   (0, 0), "../Assets/gem.png")]
+items = [Item(0, "Sword", "An ancient sword passed down through your family", 1, (0, 0), "../Assets/sword.png"),
+         Item(1, "Apple", "An apple picked fresh from a tree", 32, (0, 0), "../Assets/apple.png"),
+         Item(2, "Gem", "A precious gemstone", 3, (0, 0), "../Assets/gem.png")]
 
 # set the position of the first item
 pos_x = 16
@@ -122,6 +124,7 @@ pos_y = 16
 
 # iterate through the list and space them out appropriately
 for i in items:
+    i.scale(0.5, 2.0)
     pos = (pos_x, pos_y)
     i.set_pos(pos)
     pos_x = pos_x + (i.get_width() * 1.5)
@@ -135,6 +138,7 @@ while running:
     screen.fill(pygame.Color(0, 0, 0))
     # Display each item
     for i in items:
+
         i.display(screen)
     # Display the description (separate for loop to avoid an item rendering overtop of the text
     for i in items:
