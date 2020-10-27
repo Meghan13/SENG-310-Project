@@ -110,11 +110,11 @@ running = True
 
 # Add three items to a list of items
 items = [Item(0, "Sword", "An ancient sword passed down through your family",
-              1, (0, 0), "../Assets/sword.png"),
+              1, (0, 0), "./Assets/sword.png"),
          Item(1, "Apple", "An apple picked fresh from a tree",
-              32, (0, 0), "../Assets/apple.png"),
+              32, (0, 0), "./Assets/apple.png"),
          Item(1, "Gem", "A precious gemstone", 3,
-                   (0, 0), "../Assets/gem.png")]
+                   (0, 0), "./Assets/gem.png")]
 
 # set the position of the first item
 pos_x = 16
