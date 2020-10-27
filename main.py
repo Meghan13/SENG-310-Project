@@ -1,26 +1,28 @@
 import pygame
-import Code.item
 
 #Create the screen
 from Code import item
+from Code import inventory as inv
 
 screen = pygame.display.set_mode((800,600))
 clock = pygame.time.Clock()
 clock.tick(15)
 
 running = True
-rect1 = pygame.Rect((100, 100), (100, 100))
-rect2 = pygame.Rect((150, 150), (100, 100))
+player = pygame.Rect((100, 100), (100, 100))
+player_inventory = inv.Inventory(49, (400, 10), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
+# rect2 = pygame.Rect((150, 150), (100, 100))
 
 right = False
 left = False
 up = False
 down = False
 
-item1 = item.Item(0, "Name", "This is an item", 20, (10, 10), "/Assets/temp.png")
+# item1 = item.Item(0, "Name", "This is an item", 20, (10, 10), "/Assets/temp.png")
+player_inventory.open()
 
 while running:
-    rect2 = item1.get_rect()
+    # rect2 = item1.get_rect()d
     for event in pygame.event.get():
         # Check if key was pressed
         if event.type == pygame.KEYDOWN:
@@ -53,6 +55,8 @@ while running:
         rect1.y = rect1.y + 1
     if up and rect1.top > 0:
         rect1.y = rect1.y - 1
+
     screen.fill(pygame.Color(0, 0, 0))
-    pygame.draw.rect(screen, pygame.Color(100, 0, 0), rect2)
+    player_inventory.draw(screen);
+    # pygame.draw.rect(screen, pygame.Color(100, 0, 0), rect2)
     pygame.display.update()
