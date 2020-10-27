@@ -74,12 +74,12 @@ class Item:
     # This function takes in a screen and displays the items image at that coordinate
     def display(self, screen: pygame.display):
         screen.blit(self.image, self.pos)
-        if self.is_highlighted:
-            self.highlight_color = pygame.color.Color(255, 255, 0)
-        else:
-            self.highlight_color = pygame.color.Color(100, 100, 100)
         s = pygame.Surface((self.rect.width, self.rect.height))
-        s.set_alpha(100)
+        if self.is_highlighted:
+            s.set_alpha(100)
+        else:
+            s.set_alpha(0)
+
         s.fill(self.highlight_color)
         screen.blit(s, self.rect.topleft)
 

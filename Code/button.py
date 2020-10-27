@@ -4,12 +4,31 @@ pygame.init()
 
 
 class Button:
-    def __init__(self, new_height: int, new_width: int, new_pos: tuple, new_text: str):
+    rect = None  # button rect
+    height = None  # height of the button
+    width = None  # width of the button
+    pos = None  # position of the button
+    text = None  # text on the button
+    color = pygame.Color(100, 100, 100)
+    if color.r + 20 < 255 and color.g + 20 < 255 and color.b + 20 < 255:
+        hover_color = pygame.color.Color(color.r + 20, color.g + 20, color.b + 20)
+    else:
+        hover_color = pygame.color.Color(255, 255, 255)
+    old_color = color
+    font = pygame.font.Font("freesansbold.ttf", 12)  # change this to change font and font size
+
+    def __init__(self, new_height: int, new_width: int, new_pos: tuple, new_text: str, new_color: pygame.Color):
         self.height = new_height
         self.width = new_width
         self.pos = new_pos
         self.rect = pygame.rect.Rect(self.pos, (self.width, self.height))
         self.text = self.font.render(new_text, True, pygame.Color(255, 255, 255))
+        self.color = new_color
+        if self.color.r + 20 < 255 and self.color.g + 20 < 255 and self.color.b + 20 < 255:
+            self.hover_color = pygame.color.Color(self.color.r + 20, self.color.g + 20, self.color.b + 20)
+        else:
+            self.hover_color = pygame.color.Color(255, 255, 255)
+        self.old_color = self.color
 
     def get_rect(self):
         return self.rect
@@ -40,6 +59,8 @@ class Button:
 
     def set_color(self, new_color):
         self.color = new_color
+        self.old_color = self.color
+        self.hover_color = pygame.color.Color(self.color.r+20, self.color.g + 20, self.color.b+20)
 
     # This function checks to see whether or not the mouse is hovering
     # if it is, change the colour slightly and return True if click = True
@@ -50,8 +71,9 @@ class Button:
         # if hovering over
         if is_hover:
             # change the colour to the highlight colour
-            self.color = self.new_color
+            self.color = self.hover_color
             if clicked:
+                print(self.text)
                 return True
         # when not hovering reset colour
         else:
@@ -68,22 +90,3 @@ class Button:
         # Draw the text
         screen.blit(self.text, text_rect)
 
-    def update(self, event: pygame.event):
-        m_pos = pygame.mouse.get_pos()
-        self.hover(m_pos, False)
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 1:
-                self.hover(m_pos, True)
-
-    rect = None         # button rect
-    height = None       # height of the button
-    width = None        # width of the button
-    pos = None          # position of the button
-    text = None         # text on the button
-    color = pygame.Color(50, 50, 50)
-    old_color = color
-    if color.r + 20 < 255 and color.g + 20 < 255 and color.b + 20 < 255:
-        new_color = pygame.Color(color.r + 20, color.g + 20, color.b + 20)
-    else:
-        new_color = pygame.Color(255, 255, 255)
-    font = pygame.font.Font("freesansbold.ttf", 12)  # change this to change font and font size
