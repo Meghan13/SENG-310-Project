@@ -72,8 +72,8 @@ while running:
     pygame.draw.rect(screen, pygame.Color(100, 20, 30), chest1)
     pygame.draw.rect(screen, pygame.Color(200, 30, 4), chest2)
     if inventoryOpen:
-        if ((player.y - chest1.y)**2 + (player.x - chest1.x)**2) < 100000:
+        if ((player.y - chest1.y)**2 + (player.x - chest1.x)**2) < 10:
             pygame.draw.rect(screen, pygame.Color(100, 100, 20), inventoryPane)
-        if ((player.y - chest2.y) ** 2 + (player.x - chest2.x) ** 2) < 100000:
+        if ((player.y - chest2.y) ** 2 + (player.x - chest2.x) ** 2) < 10:
             pygame.draw.rect(screen, pygame.Color(100, 100, 20), inventoryPane2)
     pygame.display.update()
