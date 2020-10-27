@@ -5,6 +5,7 @@ import Code.item
 
 from Code import item
 
+
 # Sort functions that take a list of items and sort by specified method
 
 
@@ -25,7 +26,7 @@ def sort_by_id(list):
 
 
 # sort by name A-Z, creates new list
-#uses insertion sort
+# uses insertion sort
 def sort_by_name(list):
     index = 0
     new_list = []
@@ -60,25 +61,25 @@ def tester():
     item3 = item.Item(2, "Gem", "A precious gemstone", 3, (0, 0), "./Assets/gem.png")
     item_list = [item3, item2, item1]
 
-    for i in range(0,len(item_list)):
+    for i in range(0, len(item_list)):
         print(item_list[i].get_name())
 
     # sort by id
     item_list = sort_by_id(item_list)
     print("Sorting by id")
-    for i in range(0,len(item_list)):
+    for i in range(0, len(item_list)):
         print(item_list[i].get_name())
 
     # sort by item name
     item_list = sort_by_name(item_list)
     print("Sorting by name")
-    for i in range(0,len(item_list)):
+    for i in range(0, len(item_list)):
         print(item_list[i].get_name())
 
     # sort by item number
     item_list = sort_by_number(item_list)
     print("Sorting by number")
-    for i in range(0,len(item_list)):
+    for i in range(0, len(item_list)):
         print(item_list[i].get_name())
 
 
