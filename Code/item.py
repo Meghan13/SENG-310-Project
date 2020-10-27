@@ -73,8 +73,15 @@ class Item:
 
     # This function takes in a screen and displays the items image at that coordinate
     def display(self, screen: pygame.display):
-        pygame.draw.rect(screen, pygame.Color(50, 50, 50), self.rect)
         screen.blit(self.image, self.pos)
+        if self.is_highlighted:
+            self.highlight_color = pygame.color.Color(255, 255, 0)
+        else:
+            self.highlight_color = pygame.color.Color(100, 100, 100)
+        s = pygame.Surface((self.rect.width, self.rect.height))
+        s.set_alpha(100)
+        s.fill(self.highlight_color)
+        screen.blit(s, self.rect.topleft)
 
     # This function displays the item description to the screen just above the cursor
     def description(self, screen: pygame.display, m_pos: tuple):
@@ -110,5 +117,7 @@ class Item:
     rect = None   # item rect for collisions/hover detection
     image = None  # a string which stores the location of the image for an item
     is_highlighted = False
+    highlight_color = pygame.color.Color(255, 255, 0)
+
     WIDTH = 48    # a constant width for the image and rect
     HEIGHT = 48   # a constant height for the image and rect

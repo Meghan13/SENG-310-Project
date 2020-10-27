@@ -19,51 +19,20 @@ left = False
 up = False
 down = False
 
-# item1 = item.Item(0, "Name", "This is an item", 20, (10, 10), "/Assets/temp.png")
+item1 = item.Item(0, "Hello", "This is a test", 10, (10, 10), "./Assets/sword.png")
+item2 = item.Item(1, "Goodbye", "This is a test", 10, (10, 10), "./Assets/sword.png")
+player_inventory.place_item(item1, 0)
+player_inventory.place_item(item2, 1)
+item1.set_highlight(True)
+
 player_inventory.open()
 
 while running:
-    # rect2 = item1.get_rect()d
-    for event in pygame.event.get():
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            # since the button was click, check if hovering
-            if but.hover(pygame.mouse.get_pos(), True):
-                print("Hello")
-        # Check if key was pressed
-        if event.type == pygame.KEYDOWN:
-            # Check direction
-            if event.key == pygame.K_d:
-                right = True
-            if event.key == pygame.K_a:
-                left = True
-            if event.key == pygame.K_w:
-                up = True
-            if event.key == pygame.K_s:
-                down = True
-        if event.type == pygame.KEYUP:
-            # Check direction
-            if event.key == pygame.K_d:
-                right = False
-            if event.key == pygame.K_a:
-                left = False
-            if event.key == pygame.K_w:
-                up = False
-            if event.key == pygame.K_s:
-                down = False
-        if event.type == pygame.QUIT:
-            running = False
-    if right and rect1.right < 800:
-        rect1.x = rect1.x + 1
-    if left and rect1.left > 0:
-        rect1.x = rect1.x - 1
-    if down and rect1.bottom < 600:
-        rect1.y = rect1.y + 1
-    if up and rect1.top > 0:
-        rect1.y = rect1.y - 1
-
     screen.fill(pygame.Color(0, 0, 0))
-    player_inventory.draw(screen)
-    but.hover(pygame.mouse.get_pos(), False)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+        but.update(event)
     but.display(screen)
     # pygame.draw.rect(screen, pygame.Color(100, 0, 0), rect2)
     pygame.display.update()

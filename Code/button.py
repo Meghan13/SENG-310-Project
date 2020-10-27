@@ -43,19 +43,20 @@ class Button:
 
     # This function checks to see whether or not the mouse is hovering
     # if it is, change the colour slightly and return True if click = True
-    def hover(self, m_pos: tuple, click: bool):
+    def hover(self, m_pos: tuple, clicked: bool):
+
         # compare the coordinates of the mouse and the items rect
         is_hover = self.rect.left < m_pos[0] < self.rect.right and self.rect.top < m_pos[1] < self.rect.bottom
         # if hovering over
         if is_hover:
             # change the colour to the highlight colour
             self.color = self.new_color
-            # if player clicks while hovering return true
-            if click:
+            if clicked:
                 return True
         # when not hovering reset colour
         else:
             self.color = self.old_color
+        # check to see if the mouse was clicked while hovering
         return False
 
     # This displays the button with the text centered on it
@@ -66,6 +67,13 @@ class Button:
         pygame.draw.rect(screen, self.color, self.rect)
         # Draw the text
         screen.blit(self.text, text_rect)
+
+    def update(self, event: pygame.event):
+        m_pos = pygame.mouse.get_pos()
+        self.hover(m_pos, False)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                self.hover(m_pos, True)
 
     rect = None         # button rect
     height = None       # height of the button
