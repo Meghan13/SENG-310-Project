@@ -3,7 +3,7 @@ import pygame
 #Create the screen
 from Code import item
 from Code import inventory as inv
-
+from Code import button
 screen = pygame.display.set_mode((800,600))
 clock = pygame.time.Clock()
 clock.tick(15)
@@ -11,6 +11,7 @@ clock.tick(15)
 running = True
 player = pygame.Rect((100, 100), (100, 100))
 player_inventory = inv.Inventory(49, (400, 10), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
+but = button.Button(20, 100, (10, 10), "Hello world")
 # rect2 = pygame.Rect((150, 150), (100, 100))
 
 right = False
@@ -24,6 +25,10 @@ player_inventory.open()
 while running:
     # rect2 = item1.get_rect()d
     for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            # since the button was click, check if hovering
+            if but.hover(pygame.mouse.get_pos(), True):
+                print("Hello")
         # Check if key was pressed
         if event.type == pygame.KEYDOWN:
             # Check direction
@@ -57,6 +62,8 @@ while running:
         rect1.y = rect1.y - 1
 
     screen.fill(pygame.Color(0, 0, 0))
-    player_inventory.draw(screen);
+    player_inventory.draw(screen)
+    but.hover(pygame.mouse.get_pos(), False)
+    but.display(screen)
     # pygame.draw.rect(screen, pygame.Color(100, 0, 0), rect2)
     pygame.display.update()
