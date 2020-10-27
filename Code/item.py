@@ -68,7 +68,7 @@ class Item :
         self.pos = item_pos
         self.rect = pygame.Rect(self.pos, (self.WIDTH, self.HEIGHT))
 
-    def highlight(self, highlight_bool: bool):
+    def set_highlight(self, highlight_bool: bool):
         self.is_highlighted = highlight_bool
 
     # This function takes in a screen and displays the items image at that coordinate
