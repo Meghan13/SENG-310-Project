@@ -55,6 +55,25 @@ def sort_by_number(list):
     return new_list
 
 
+# currently using placeholder boolean to determine
+# whether is highlighted, will use later method to
+# determine later
+# sort using bucket sort algorithm
+def sort_by_highlight(list):
+    highlight_list = []
+    non_highlight_list = []
+
+    # do a first pass to seperate highlighted items from non highlighted
+    for i in range (0, len(list)):
+        if list[i].get_highlight():
+            highlight_list.append(list[i])
+        else:
+            non_highlight_list.append(list[i])
+    # add non highlighted to the back
+    highlight_list.extend(non_highlight_list)
+    return highlight_list
+
+
 def tester():
     item1 = item.Item(0, "Sword", "An ancient sword passed down through your family", 1, (0, 0), "./Assets/sword.png")
     item2 = item.Item(1, "Apple", "An apple picked fresh from a tree", 32, (0, 0), "./Assets/apple.png")
@@ -79,6 +98,16 @@ def tester():
     # sort by item number
     item_list = sort_by_number(item_list)
     print("Sorting by number")
+    for i in range(0, len(item_list)):
+        print(item_list[i].get_name())
+
+    # sort by highlight
+    item1.set_highlight(False)
+    item2.set_highlight(True)
+    item3.set_highlight(True)
+
+    item_list = sort_by_highlight(item_list)
+    print("Sorting by highlight")
     for i in range(0, len(item_list)):
         print(item_list[i].get_name())
 
