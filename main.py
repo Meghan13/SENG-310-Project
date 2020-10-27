@@ -42,7 +42,10 @@ while running:
             if event.button == 1:
                 for i in chests:
                     if i[0].hover(pygame.mouse.get_pos(), True):
-                        opened_chest = i
+                        if i == opened_chest:
+                            opened_chest = None
+                        else:
+                            opened_chest = i
 
     for i in chests:
         i[0].hover(pygame.mouse.get_pos(), False)
