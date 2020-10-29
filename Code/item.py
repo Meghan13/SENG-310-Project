@@ -71,6 +71,9 @@ class Item:
     def set_highlight(self, highlight_bool: bool):
         self.is_highlighted = highlight_bool
 
+    def set_highlight_color(self, new_color: pygame.Color):
+        self.highlight_color = new_color
+
     # This function takes in a screen and displays the items image at that coordinate
     def display(self, screen: pygame.display):
         screen.blit(self.image, self.pos)
