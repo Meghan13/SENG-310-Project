@@ -1,6 +1,6 @@
 import pygame
-from Code import item
-from Code import inventory as inv
+from Code.item import Item
+from Code.inventory import Inventory as Inv
 from Code import button
 
 WIDTH = 1600
@@ -12,24 +12,24 @@ clock.tick(15)
 
 running = True
 player = pygame.Rect((100, 100), (100, 100))
-player_inventory = inv.Inventory(49, (400, 40), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
+player_inventory = Inv(49, (400, 40), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
 
 but1 = button.Button(20, 20, (10, 10), "1", pygame.Color(139, 82, 45))
 but2 = button.Button(20, 20, (35, 10), "2", pygame.Color(139, 82, 45))
 but3 = button.Button(20, 20, (60, 10), "3", pygame.Color(139, 82, 45))
 but4 = button.Button(20, 20, (85, 10), "4", pygame.Color(139, 82, 45))
 
-chest1 = inv.Inventory(21, (10, 40), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
-chest2 = inv.Inventory(21, (10, 40), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
-chest3 = inv.Inventory(21, (10, 40), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
-chest4 = inv.Inventory(21, (10, 40), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
+chest1 = Inv(21, (10, 40), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
+chest2 = Inv(21, (10, 40), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
+chest3 = Inv(21, (10, 40), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
+chest4 = Inv(21, (10, 40), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
 chests = [(but1, chest1), (but2, chest2), (but3, chest3), (but4, chest4)]
 
 opened_chest = None
-item1 = item.Item(0, "weapon", "Hello", "This is a test", 10, (10, 10), "./Assets/sword.png")
+item1 = Item(0, "weapon", "Hello", "This is a test", 10, (10, 10), "./Assets/sword.png")
 item1.set_highlight_color(pygame.Color(100, 100, 100))
 
-item2 = item.Item(1, "weapon", "Goodbye", "This is a test", 10, (10, 10), "./Assets/sword.png")
+item2 = Item(1, "weapon", "Goodbye", "This is a test", 10, (10, 10), "./Assets/sword.png")
 item2.set_highlight(True)
 
 chests[0][1].place_item(item1, 0)
