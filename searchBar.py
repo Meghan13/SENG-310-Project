@@ -27,15 +27,22 @@ running = True
 
 while running:
     screen.fill(pygame.Color(0, 0, 0))
-    box1 = pygame.Rect((550, 10), (200, 40))
+    bar = pygame.Rect((550, 10), (200, 40))
+    pygame.draw.rect(screen, pygame.Color(225, 225, 225), bar)
+
     # bar.fill((225,225,225))
     events = pygame.event.get()
     for event in events:
         if event.type == pygame.QUIT:
             pygame.quit()
-    pygame.draw.rect(screen, pygame.Color(225, 225, 225), box1)
-    textinput.update(events)
-    screen.blit(textinput.get_surface(), (550, 10))
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            x, y = event.pos
+            if bar.collidepoint(x, y):
+                screen.blit(textinput.get_surface(), (550, 10))
+            textinput.update(events)
+        textinput.update(events)
+
+
 
     pygame.display.update()
     clock.tick(30)
