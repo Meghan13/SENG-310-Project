@@ -3,17 +3,11 @@ from enum import Enum
 # Initialize the pygame
 pygame.init()
 
-# item init
-# Function to set the all the attributes of the item
-# item_id   :    unique id associated with this item
-# item_name :    name associated with this item
-# item_num  :    number of this item in the stack
-# item_pos  :    position of the top left corner of the item
-
 
 class Item:
-    def __init__(self, item_id: int, item_name: str, item_info: str, item_num: int, item_pos: tuple, image_dir: str):
+    def __init__(self, item_id: int, item_type: str, item_name: str, item_info: str, item_num: int, item_pos: tuple, image_dir: str):
         self.i_id = item_id
+        self.type = item_type
         self.name = item_name
         self.info = item_info
         self.num = item_num
@@ -24,6 +18,9 @@ class Item:
 
     def get_id(self):
         return self.i_id
+
+    def get_type(self):
+        return self.type
 
     def get_name(self):
         return self.name
@@ -54,6 +51,9 @@ class Item:
 
     def set_id(self, item_id: int):
         self.i_id = item_id
+
+    def set_type(self, new_type: str):
+        self.type = new_type
 
     def set_name(self, item_name: str):
         self.name = item_name
@@ -113,6 +113,7 @@ class Item:
 
     font = pygame.font.Font("freesansbold.ttf", 12)  # change this to change font and font size
     i_id = None   # unique item id
+    type = None   # item type
     name = None   # item name
     info = None   # item description
     num = None    # amount of an item
