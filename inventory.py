@@ -1,5 +1,5 @@
 import pygame
-from Code import item
+import item
 import math
 
 
