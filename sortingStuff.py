@@ -1,8 +1,7 @@
 # Created by Ben Kung
 import pygame
-import Code.item
 
-from Code import item
+import item
 
 
 # Sort functions that take a list of items and sort by specified method
