@@ -123,3 +123,18 @@ class Inventory:
         x = self.pos[0] + (index % self.cells_per_row) * (self.cell_size[0] + self.cell_padding) + self.cell_padding
         y = self.pos[1] + int(index / self.cells_per_row) * (self.cell_size[1] + self.cell_padding) + self.cell_padding
         return (x, y)
+
+    # Main Interface
+
+    #def menu_update(self, event):
+        # Pass events to menu bar here
+
+    def items_update(self, event, cursor_item):
+        if event.type == pygame.MOUSEBUTTONUP:
+            i = self.pos_to_index(event.pos)
+            if i is not None:
+                return self.place_item(cursor_item, i)
+
+        return cursor_item
+
+
