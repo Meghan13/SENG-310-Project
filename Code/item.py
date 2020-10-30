@@ -3,17 +3,11 @@ from enum import Enum
 # Initialize the pygame
 pygame.init()
 
-# item init
-# Function to set the all the attributes of the item
-# item_id   :    unique id associated with this item
-# item_name :    name associated with this item
-# item_num  :    number of this item in the stack
-# item_pos  :    position of the top left corner of the item
 
-
-class Item :
-    def __init__(self, item_id: int, item_name: str, item_info: str, item_num: int, item_pos: tuple, image_dir: str):
+class Item:
+    def __init__(self, item_id: int, item_type: str, item_name: str, item_info: str, item_num: int, item_pos: tuple, image_dir: str):
         self.i_id = item_id
+        self.type = item_type
         self.name = item_name
         self.info = item_info
         self.num = item_num
@@ -24,6 +18,9 @@ class Item :
 
     def get_id(self):
         return self.i_id
+
+    def get_type(self):
+        return self.type
 
     def get_name(self):
         return self.name
@@ -55,6 +52,9 @@ class Item :
     def set_id(self, item_id: int):
         self.i_id = item_id
 
+    def set_type(self, new_type: str):
+        self.type = new_type
+
     def set_name(self, item_name: str):
         self.name = item_name
 
@@ -71,17 +71,27 @@ class Item :
     def set_highlight(self, highlight_bool: bool):
         self.is_highlighted = highlight_bool
 
+    def set_highlight_color(self, new_color: pygame.Color):
+        self.highlight_color = new_color
+
     # This function takes in a screen and displays the items image at that coordinate
     def display(self, screen: pygame.display):
-        pygame.draw.rect(screen, pygame.Color(50, 50, 50), self.rect)
         screen.blit(self.image, self.pos)
+        s = pygame.Surface((self.rect.width, self.rect.height))
+        if self.is_highlighted:
+            s.set_alpha(100)
+        else:
+            s.set_alpha(0)
+
+        s.fill(self.highlight_color)
+        screen.blit(s, self.rect.topleft)
 
     # This function displays the item description to the screen just above the cursor
     def description(self, screen: pygame.display, m_pos: tuple):
         # Check to see if mouse is over (second variable not used yet)
         if self.hover(m_pos, False):
             # create a text object based on our global item font
-            text = self.font.render(self.info, True, pygame.Color(255, 255, 255))
+            text = self.font.render("id:"+str(self.i_id)+"   "+self.info, True, pygame.Color(255, 255, 255))
             # display text
             screen.blit(text, (m_pos[0], m_pos[1] - 10))
         # reset the text to be the number of items
@@ -103,6 +113,7 @@ class Item :
 
     font = pygame.font.Font("freesansbold.ttf", 12)  # change this to change font and font size
     i_id = None   # unique item id
+    type = None   # item type
     name = None   # item name
     info = None   # item description
     num = None    # amount of an item
@@ -110,5 +121,7 @@ class Item :
     rect = None   # item rect for collisions/hover detection
     image = None  # a string which stores the location of the image for an item
     is_highlighted = False
+    highlight_color = pygame.color.Color(255, 255, 0)
+
     WIDTH = 48    # a constant width for the image and rect
     HEIGHT = 48   # a constant height for the image and rect

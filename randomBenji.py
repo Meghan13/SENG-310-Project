@@ -9,8 +9,7 @@ pygame.init()
 #2020-10-23
 
 screen = pygame.display.set_mode((800, 600))
-clock = pygame.time.Clock()
-clock.tick(15)
+
 
 running = True
 player = pygame.Rect((100, 100), (100, 100))

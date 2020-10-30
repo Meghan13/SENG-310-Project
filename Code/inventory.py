@@ -51,7 +51,7 @@ class Inventory:
     # Inventory manipulation
 
     def take_item(self, screen_pos: tuple):
-        if isOopen:
+        if isOpen:
             i = self.pos_to_index(screen_pos)
             if i is not None:
                 return self.take_item(i)
@@ -61,7 +61,7 @@ class Inventory:
         return self.place_item(None, index)
 
     def place_item(self, item: item.Item, screen_pos: tuple):
-        if isOopen:
+        if isOpen:
             i = self.pos_to_index(screen_pos)
             if i is not None:
                 return self.place_item(item, i)
