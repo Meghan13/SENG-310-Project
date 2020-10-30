@@ -4,7 +4,7 @@ import pygame
 import sys
 import os
 
-from Code.inventory import Inventory
+from inventory import Inventory
 
 """
     HactuallyBenji
@@ -34,7 +34,7 @@ class Player(pygame.sprite.Sprite):
 
         #found this if we need more than one player
         for i in range(1, 5):
-            img = pygame.image.load('../Assets/character.png')
+            img = pygame.image.load('Assets/character.png')
             #img.convert_alpha()  # optimise alpha
             #img.set_colorkey(ALPHA)  # set alpha
             self.images.append(img)
@@ -69,13 +69,25 @@ class Player(pygame.sprite.Sprite):
         Check to see if the player is in range of chest.
         Returns boolean value for whether or not inventory should be accessible
     """
-    def is_in_player_range(self, inventory: Inventory, desired_range: int):
+    def is_chest_in_player_range(self, inventory: Inventory, desired_range: int):
         return ((self.rect.x - inventory.rect.x)**2 + (self.rect.y - inventory.rect.y)**2) < desired_range**2
 
+    def distance_from_chest(self, chest: Inventory):
+        return (self.rect.x - chest.rect.x)**2 + (self.rect.y - chest.rect.y)**2
+
+    def get_nearest_chest(self, chests: list):
+        closest = self.distance_from_chest(chests[0])
+        closest_chest = chests[0]
+        for chest in chests:
+            if self.distance_from_chest(chest) < closest:
+                closest = self.distance_from_chest(chest)
+                closest_chest = chest
+        return closest_chest
 
 
-backdrop = pygame.image.load('../Assets/backdrop.jpg')
-backdrop_alt = pygame.image.load('../Assets/backdrop_alt.jpg')
+
+backdrop = pygame.image.load('Assets/backdrop.jpg')
+backdrop_alt = pygame.image.load('Assets/backdrop_alt.jpg')
 
 clock = pygame.time.Clock()
 pygame.init()
