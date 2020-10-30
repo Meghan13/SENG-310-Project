@@ -2,6 +2,7 @@ import pygame
 from item import Item
 from inventory import Inventory as Inv
 from button import Button
+# from player import Player
 
 
 # MAIN PROPS -------------------------------------------------------------------------------
@@ -15,19 +16,24 @@ clock.tick(15)
 
 # If script is running
 running = True
-# If any inventory menus are open
-inventory_menu_open = False
 
-# Replace with Player class when complete
-player = pygame.Rect((100, 100), (100, 100))
-
+# The player and their inventory
+# player = Player()
 player_inventory = Inv(49, (400, 40), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
 
 # List of all chests
 chests = []
 
+# If any inventory menus are open
+inventory_menu_open = False
+# If inventory menu state should change this frame
+inventory_menu_toggled = False
 # Chest opened this frame, if any
 new_opened_chest = None
+
+# Item held by the cursor
+cursor_item = None
+
 
 
 # FUNCTION DEFS ----------------------------------------------------------------------------
@@ -37,6 +43,12 @@ def create_chest(pos, size, label):
     inv = Inv(21, (10, 40), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
     btn = Button(size[0], size[1], pos, label, pygame.Color(139, 82, 45))
     return (btn, inv)
+
+def open_inventories():
+    all_open = [c[1] for c in chests if c[1].is_open]
+    if player_inventory.is_open:
+        all_open.insert(0, player_inventory)
+    return all_open
 
 
 # SCENE POPULATION -------------------------------------------------------------------------
@@ -59,8 +71,13 @@ chests[1][1].place_item(item2, 1)
 # MASTER LOOP ------------------------------------------------------------------------------
 
 while running:
-    # Handle each event this frame
+
+    # --- Handle each event this frame ---
     for event in pygame.event.get():
+
+        # Mitigate weird bugs caused by probably implementing this event loop wrong
+        if event.type == pygame.MOUSEMOTION:
+            continue
 
         # Handle game window being closed
         if event.type == pygame.QUIT:
@@ -79,47 +96,79 @@ while running:
                     break
 
         # Handle the inventory button being pressed
+        inventory_menu_toggled = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_i:
+                inventory_menu_toggled = True
+
+        # --- Stuff that only happens when inventories are not open ---
+        if not inventory_menu_open:
+
+            # If a chest was clicked or the inventory button pressed,
+            # open the appropriate inventories.
+            if inventory_menu_toggled or (new_opened_chest is not None):
+                inventory_menu_open = True
+                player_inventory.open()
+                if new_opened_chest:
+                    new_opened_chest[1].open()
+
+        # --- Stuff that only happens when inventories are open ---
+        else:
+
+            # Handle interactions with open inventories
+            for inv in open_inventories():
+                inv.menu_update(event)
+                cursor_item = inv.items_update(event, cursor_item)
+
+            # If chest is clicked, replace open chest inventory
+            if new_opened_chest is not None:
+                if len(open_inventories()) > 1:
+                    open_inventories()[1].close()
+                new_opened_chest[1].open()
+
+            # If the inventory menu is closed, close all open inventories and return
+            # the cursor item to the player inventory
+            if inventory_menu_toggled:
+                print('!')
+                inventory_menu_open = False
+
+                if cursor_item is not None:
+                    player_inventory.append_item(cursor_item)
+                    cursor_item = None
+
+                for inv in open_inventories():
+                    inv.close()
+
+    # --- Update objects ---
+
+    #if not inventory_menu_open:
 
 
+    #else:
 
 
-
-
-
-
-
-        # Inventory button pressed
-
-                if player_inventory.isOpen:
-                    player_inventory.close()
-                    opened_chest = None
-                else:
-                    player_inventory.open()
-
-        # Mouse button pressed
-        if event.type == pygame.MOUSEBUTTONUP:
-            if event.button == 1:
-                for i in chests:
-                    if i[0].hover(pygame.mouse.get_pos(), True):
-                        if i == opened_chest:
-                            opened_chest = None
-                        else:
-                            opened_chest = i
+    # --- Draw objects ---
 
     # Draw background
     screen.fill(pygame.Color(0, 0, 0))
 
-    for i in chests:
-        i[0].hover(pygame.mouse.get_pos(), False)
-        i[0].display(screen)
-    if opened_chest:
-        opened_chest[1].draw(screen)
-        if not player_inventory.isOpen:
-            player_inventory.open()
-    if player_inventory.isOpen:
-        player_inventory.draw(screen)
+    # Draw chests
+    for c in chests:
+        c[0].hover(pygame.mouse.get_pos(), False)
+        c[0].display(screen)
+
+    # Draw player (when implemented)
+    # player.draw(screen)
+
+    # Draw open inventories
+    for inv in open_inventories():
+        inv.draw(screen)
+
+    # Draw cursor item
+    if cursor_item:
+        cursor_item.set_pos(pygame.mouse.get_pos())
+        cursor_item.display(screen)
+
     pygame.display.update()
 
 

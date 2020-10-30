@@ -30,7 +30,7 @@ class Inventory:
         self.rect = pygame.Rect(self.pos, self.get_size())
 
         # Inventory menu is initialized to a "closed" state
-        self.isOpen = False
+        self.is_open = False
 
     # Getters & setters
 
@@ -72,7 +72,25 @@ class Inventory:
         self.contents[index] = item
         return taken
 
-    # Visual
+    def append_item(self, item: item.Item):
+        for i in range(0, self.capacity):
+            if self.contents[i] is None:
+                self.contents[i] = item
+                break
+
+    # Main Interface
+
+    def menu_update(self, event):
+        # Pass events to menu bar here
+        return None
+
+    def items_update(self, event, cursor_item):
+        if (event.type == pygame.MOUSEBUTTONDOWN and cursor_item is None) or (event.type == pygame.MOUSEBUTTONUP and cursor_item is not None):
+            i = self.pos_to_index(event.pos)
+            if i is not None:
+                return self.place_item(cursor_item, i)
+
+        return cursor_item
 
     def open(self, pos = None, cells_per_row = None):
         if pos is None:
@@ -83,10 +101,10 @@ class Inventory:
         self.pos = pos
         self.cells_per_row = cells_per_row
         self.rect = pygame.Rect(self.pos, self.get_size())
-        self.isOpen = True
+        self.is_open = True
 
     def close(self):
-        self.isOpen = False
+        self.is_open = False
 
     def draw(self, screen: pygame.display):
         pygame.draw.rect(screen, self.color, self.rect)
@@ -105,17 +123,18 @@ class Inventory:
 
     def pos_to_index(self, pos: tuple):
         rel_pos = (pos[0] - self.pos[0], pos[1] - self.pos[1])
-        size = self.get_size
+        size = self.get_size()
 
         if rel_pos[0] < 0 or rel_pos[0] > size[0] or rel_pos[1] < 0 or rel_pos[1] > size[1]:
             return None
 
-        x = (rel_pos[0] + float(cellPadding) / 2) / (self.cell_size[0] + self.cell_padding)
-        y = (rel_pos[1] + float(cellPadding) / 2) / (self.cell_size[1] + self.cell_padding)
+        x = int((rel_pos[0] + float(self.cell_padding)/2) / (self.cell_size[0] + self.cell_padding))
+        y = int((rel_pos[1] + float(self.cell_padding)/2) / (self.cell_size[1] + self.cell_padding))
         i = x + (y * self.cells_per_row)
 
         if i < self.capacity:
-            return i
+            print(str(i))
+            return int(i)
         else:
             return None
 
@@ -124,17 +143,6 @@ class Inventory:
         y = self.pos[1] + int(index / self.cells_per_row) * (self.cell_size[1] + self.cell_padding) + self.cell_padding
         return (x, y)
 
-    # Main Interface
 
-    #def menu_update(self, event):
-        # Pass events to menu bar here
-
-    def items_update(self, event, cursor_item):
-        if event.type == pygame.MOUSEBUTTONUP:
-            i = self.pos_to_index(event.pos)
-            if i is not None:
-                return self.place_item(cursor_item, i)
-
-        return cursor_item
 
 
