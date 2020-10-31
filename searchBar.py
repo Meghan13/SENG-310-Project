@@ -24,6 +24,9 @@ class SearchBar:
         self.textinput.max_string_length = 10
         self.user_search_text = ""
         self.clear_button = pygame.Rect(new_clear_button_pos, (new_clear_button_width, new_clear_button_height))
+        self.new_clear_button_pos = new_clear_button_pos
+        self.new_clear_button_width = new_clear_button_width
+        self.new_clear_button_height = new_clear_button_height
 
     def update(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -62,6 +65,13 @@ class SearchBar:
     def draw(self, screen):
         pygame.draw.rect(screen, pygame.Color(225, 225, 225), self.bar)
         pygame.draw.rect(screen, pygame.Color(255, 0, 0), self.clear_button)
+        pygame.draw.line(screen, pygame.Color(0, 0, 0), self.new_clear_button_pos,
+                         (self.new_clear_button_pos[0] + self.new_clear_button_width-1, self.new_clear_button_pos[1] +
+                          self.new_clear_button_height-1))
+        pygame.draw.line(screen, pygame.Color(0, 0, 0),
+                         (self.new_clear_button_pos[0],
+                          self.new_clear_button_pos[1] + self.new_clear_button_height-1),
+                         (self.new_clear_button_pos[0] + self.new_clear_button_width-1, self.new_clear_button_pos[1]),1)
         screen.blit(self.textinput.get_surface(), self.bar.topleft)
 
 
