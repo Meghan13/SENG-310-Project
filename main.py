@@ -3,7 +3,6 @@ from item import Item
 from inventory import Inventory as Inv
 from button import Button
 from player import Player
-from searchBar import SearchBar
 
 
 # MAIN PROPS -------------------------------------------------------------------------------
@@ -35,7 +34,7 @@ new_opened_chest = None
 # Item held by the cursor
 cursor_item = None
 
-test_bar = SearchBar(screen)
+#test_bar = SearchBar(screen)
 
 
 

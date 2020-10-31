@@ -1,7 +1,7 @@
 import pygame
 import item
 import math
-from searchBar import SearchBar
+from toolbar import Toolbar
 
 
 class Inventory:
@@ -30,8 +30,8 @@ class Inventory:
         self.cells_per_row = def_cells_per_row
         self.rect = pygame.Rect(self.pos, self.get_size())
 
-        self.search_bar = SearchBar(new_bar_pos = (def_pos[0], def_pos[1]-30))
-
+        #self.search_bar = SearchBar(new_bar_pos = (def_pos[0], def_pos[1]-30))
+        self.tool_bar = Toolbar(self.rect.width, self.rect.topleft, pygame.Color(100, 100, 100), color)
         # Inventory menu is initialized to a "closed" state
         self.is_open = False
 
@@ -84,10 +84,8 @@ class Inventory:
     # Main Interface
 
     def menu_update(self, event):
-        search_string = self.search_bar.user_search_text
-        self.search_bar.update(event)
-        if search_string != self.search_bar.user_search_text:
-            self.search_items(self.search_bar.user_search_text)
+        self.tool_bar.update(event)
+        print(self.tool_bar.get_text())
 
 
     def items_update(self, event, cursor_item):
@@ -126,7 +124,7 @@ class Inventory:
                 self.contents[i].display(screen)
 
         #Draw toolbar
-        self.search_bar.draw(screen)
+        self.tool_bar.display(screen)
 
     # Utility
 
@@ -153,7 +151,7 @@ class Inventory:
 
     # Use searchBar and inventory to find items from user input and highlights them
     def search_items(self, search_term):
-        print('Search term: '+ search_term)
+        print('Search term: ' + search_term)
         if search_term == '':
             self.unhighlight_all_items()
             return

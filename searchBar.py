@@ -9,18 +9,17 @@ class SearchBar:
     BAR_HEIGHT = 40  # height of search bar
     BAR_WIDTH = 200  # width of search bar
     BAR_POS = (550, 10)  # screen position of search bar
-    CLEAR_BUTTON_POS = (BAR_POS[0]+165, BAR_POS[1]+5) # screen position of clear button relative to search bar
+    CLEAR_BUTTON_POS = (BAR_POS[0] + 165, BAR_POS[1] + 5)  # screen position of clear button relative to search bar
     CLEAR_BUTTON_WIDTH = 30
     CLEAR_BUTTON_HEIGHT = 30
 
-
-    def __init__(self, screen=None, new_text_colour = text_colour, new_bar_pos = BAR_POS, new_bar_width = BAR_WIDTH,\
-                 new_bar_height = BAR_HEIGHT, new_clear_button_pos = CLEAR_BUTTON_POS,\
-                 new_clear_button_width = CLEAR_BUTTON_WIDTH, new_clear_button_height = CLEAR_BUTTON_HEIGHT):
+    def __init__(self, new_text_colour, new_bar_pos, new_bar_width,
+                 new_bar_height, new_clear_button_pos,
+                 new_clear_button_width, new_clear_button_height):
         # Create TextInput Obj
         self.textinput = pygame_textinput.TextInput(text_color=new_text_colour)
         self.bar = pygame.Rect(new_bar_pos, (new_bar_width, new_bar_height))
-        self.screen = screen
+        # self.screen = screen
         self.text_input_active = True
         self.textinput.max_string_length = 10
         self.user_search_text = ""
@@ -47,12 +46,11 @@ class SearchBar:
         # Handles search upon pressing enter/return key
         # if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.text_input_active:
 
-            # print(self.user_search_text) #For debugging
+        # print(self.user_search_text) #For debugging
 
         if self.text_input_active:
             self.textinput.update([event])
             self.user_search_text = self.textinput.input_string
-
 
     def search_bar_clear_button(self, events):
         self.textinput.input_string = ""
@@ -65,6 +63,7 @@ class SearchBar:
         pygame.draw.rect(screen, pygame.Color(225, 225, 225), self.bar)
         pygame.draw.rect(screen, pygame.Color(255, 0, 0), self.clear_button)
         screen.blit(self.textinput.get_surface(), self.bar.topleft)
+
 
 # The following code Tests SearchBar class
 def test():
