@@ -6,7 +6,7 @@ from toolbar import Toolbar
 
 class Inventory:
     # Global size for all item rects
-    cell_size = (48, 48)
+    cell_size = (64, 64)
     # Global padding between inventory cells
     cell_padding = 4
 
@@ -125,6 +125,7 @@ class Inventory:
 
         #Draw toolbar
         self.tool_bar.display(screen)
+        self.search_items(self.tool_bar.get_text())
 
     # Utility
 
