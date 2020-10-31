@@ -2,7 +2,7 @@ import pygame
 from item import Item
 from inventory import Inventory as Inv
 from button import Button
-# from player import Player
+from player import Player
 
 
 # MAIN PROPS -------------------------------------------------------------------------------
@@ -18,7 +18,7 @@ clock.tick(15)
 running = True
 
 # The player and their inventory
-# player = Player()
+player = Player()
 player_inventory = Inv(49, (400, 40), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
 
 # List of all chests
@@ -67,6 +67,12 @@ item2.set_highlight(True)
 chests[0][1].place_item(item1, 0)
 chests[1][1].place_item(item2, 1)
 
+player.rect.x = 150  # go to x
+player.rect.y = 150  # go to y
+player_list = pygame.sprite.Group()
+player_list.add(player)
+stride = 2
+
 
 # MASTER LOOP ------------------------------------------------------------------------------
 
@@ -100,6 +106,28 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_i:
                 inventory_menu_toggled = True
+
+            # BenM's code
+            # control the player
+            if event.key == pygame.K_LEFT or event.key == ord('a'):
+                player.control(-stride, 0)
+            if event.key == pygame.K_RIGHT or event.key == ord('d'):
+                player.control(stride, 0)
+            if event.key == pygame.K_UP or event.key == ord('w'):
+                player.control(0, -stride)
+            if event.key == pygame.K_DOWN or event.key == ord('s'):
+                player.control(0, stride)
+
+        # control the player
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT or event.key == ord('a'):
+                player.control(stride, 0)
+            if event.key == pygame.K_RIGHT or event.key == ord('d'):
+                player.control(-stride, 0)
+            if event.key == pygame.K_UP or event.key == ord('w'):
+                player.control(0, stride)
+            if event.key == pygame.K_DOWN or event.key == ord('s'):
+                player.control(0, -stride)
 
         # --- Stuff that only happens when inventories are not open ---
         if not inventory_menu_open:
@@ -157,8 +185,9 @@ while running:
         c[0].hover(pygame.mouse.get_pos(), False)
         c[0].display(screen)
 
-    # Draw player (when implemented)
-    # player.draw(screen)
+    # Draw player
+    player.update()
+    player_list.draw(screen)
 
     # Draw open inventories
     for inv in open_inventories():
