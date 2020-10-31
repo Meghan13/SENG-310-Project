@@ -113,7 +113,7 @@ def sort_by_highlight(list):
     null_num = remove_null(list)
     # do a first pass to separate highlighted items from non highlighted
     for i in range(0, len(list)):
-        if list[i].get_highlight():
+        if list[i].highlight_sort:
             highlight_list.append(list[i])
         else:
             non_highlight_list.append(list[i])

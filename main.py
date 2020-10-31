@@ -90,7 +90,7 @@ while running:
         new_opened_chest = None
         if event.type == pygame.MOUSEBUTTONUP:
             for chest in chests:
-                #If chest is clicked
+                # If chest is clicked
                 if chest[0].hover(pygame.mouse.get_pos(), True):
                     new_opened_chest = chest
                     break

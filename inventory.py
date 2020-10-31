@@ -150,6 +150,7 @@ class Inventory:
             i.set_highlight(True)
             if search_bar.textimput.get_user_search_text() in i.getName():
                 i.set_highlight_color(pygame.Color(255, 255, 0))
+                i.highlight_sort = True
             else:
                 i.set_highlight_color(pygame.Color(100, 100, 100))
 

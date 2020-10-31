@@ -121,6 +121,7 @@ class Item:
     rect = None   # item rect for collisions/hover detection
     image = None  # a string which stores the location of the image for an item
     is_highlighted = False
+    highlight_sort = False
     highlight_color = pygame.color.Color(255, 255, 0)
 
     WIDTH = 48    # a constant width for the image and rect
