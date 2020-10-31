@@ -163,13 +163,16 @@ class Inventory:
                 i.set_highlight(True)
                 if search_term in i.get_name():
                     i.set_highlight_color(pygame.Color(255, 255, 0))
+                    i.highlight_sort = True
                 else:
                     i.set_highlight_color(pygame.Color(100, 100, 100))
+                    i.highlight_sort = False
 
     def unhighlight_all_items(self):
         for i in self.contents:
             if i is not None:
                 i.set_highlight(False)
+                i.highlight_sort = False
 
 
 
