@@ -1,6 +1,5 @@
 import pygame
 import button
-import inventory
 from sortingStuff import sort_by_name
 import pygame_textinput
 
@@ -82,7 +81,9 @@ def test():
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
-        search_bar.update(events)
+            search_bar.update(event)
+            search_bar.draw(screen)
 
         pygame.display.update()
         clock.tick(30)
+# test()
