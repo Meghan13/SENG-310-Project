@@ -1,6 +1,7 @@
 import pygame
 import item
 import math
+import searchBar
 
 
 class Inventory:
@@ -142,6 +143,15 @@ class Inventory:
         x = self.pos[0] + (index % self.cells_per_row) * (self.cell_size[0] + self.cell_padding) + self.cell_padding
         y = self.pos[1] + int(index / self.cells_per_row) * (self.cell_size[1] + self.cell_padding) + self.cell_padding
         return (x, y)
+
+    # Use searchBar and inventory to find items from user input and highlights them
+    def search_items(self, items, search_bar):
+        for i in items:
+            i.set_highlight(True)
+            if search_bar.textimput.get_user_search_text() in i.getName():
+                i.set_highlight_color(pygame.Color(255, 255, 0))
+            else:
+                i.set_highlight_color(pygame.Color(100, 100, 100))
 
 
 
