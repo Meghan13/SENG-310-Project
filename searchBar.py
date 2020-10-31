@@ -66,20 +66,21 @@ class SearchBar:
         return self.user_search_text
 
 # The following code Tests SearchBar class
-screen = pygame.display.set_mode((800, 600))
-clock = pygame.time.Clock()
-clock.tick(15)
-screen.fill(pygame.Color(0, 0, 0))
-running = True
-search_bar = SearchBar(screen)
+def test():
+    screen = pygame.display.set_mode((800, 600))
+    clock = pygame.time.Clock()
+    clock.tick(15)
+    screen.fill(pygame.Color(0, 0, 0))
+    running = True
+    search_bar = SearchBar(screen)
 
-while running:
-    events = pygame.event.get()
+    while running:
+        events = pygame.event.get()
 
-    for event in events:
-        if event.type == pygame.QUIT:
-            pygame.quit()
-    search_bar.update(events)
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+        search_bar.update(events)
 
-    pygame.display.update()
-    clock.tick(30)
+        pygame.display.update()
+        clock.tick(30)
