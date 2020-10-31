@@ -1,7 +1,7 @@
 import pygame
 import item
 import math
-import searchBar
+from searchBar import SearchBar
 
 
 class Inventory:
@@ -29,6 +29,8 @@ class Inventory:
         self.pos = def_pos
         self.cells_per_row = def_cells_per_row
         self.rect = pygame.Rect(self.pos, self.get_size())
+
+        self.search_bar = SearchBar(new_bar_pos = (def_pos[0], def_pos[1]-30))
 
         # Inventory menu is initialized to a "closed" state
         self.is_open = False
@@ -82,8 +84,11 @@ class Inventory:
     # Main Interface
 
     def menu_update(self, event):
-        # Pass events to menu bar here
-        return None
+        search_string = self.search_bar.user_search_text
+        self.search_bar.update(event)
+        if search_string != self.search_bar.user_search_text:
+            self.search_items(self.search_bar.user_search_text)
+
 
     def items_update(self, event, cursor_item):
         if (event.type == pygame.MOUSEBUTTONDOWN and cursor_item is None) or (event.type == pygame.MOUSEBUTTONUP and cursor_item is not None):
@@ -120,6 +125,9 @@ class Inventory:
                 self.contents[i].set_pos(cell_pos)
                 self.contents[i].display(screen)
 
+        #Draw toolbar
+        self.search_bar.draw(screen)
+
     # Utility
 
     def pos_to_index(self, pos: tuple):
@@ -134,7 +142,6 @@ class Inventory:
         i = x + (y * self.cells_per_row)
 
         if i < self.capacity:
-            print(str(i))
             return int(i)
         else:
             return None
@@ -145,13 +152,24 @@ class Inventory:
         return (x, y)
 
     # Use searchBar and inventory to find items from user input and highlights them
-    def search_items(self, items, search_bar):
-        for i in items:
-            i.set_highlight(True)
-            if search_bar.textimput.get_user_search_text() in i.getName():
-                i.set_highlight_color(pygame.Color(255, 255, 0))
-            else:
-                i.set_highlight_color(pygame.Color(100, 100, 100))
+    def search_items(self, search_term):
+        print('Search term: '+ search_term)
+        if search_term == '':
+            self.unhighlight_all_items()
+            return
+
+        for i in self.contents:
+            if i is not None:
+                i.set_highlight(True)
+                if search_term in i.get_name():
+                    i.set_highlight_color(pygame.Color(255, 255, 0))
+                else:
+                    i.set_highlight_color(pygame.Color(100, 100, 100))
+
+    def unhighlight_all_items(self):
+        for i in self.contents:
+            if i is not None:
+                i.set_highlight(False)
 
 
 

@@ -3,6 +3,7 @@ from item import Item
 from inventory import Inventory as Inv
 from button import Button
 from player import Player
+from searchBar import SearchBar
 
 
 # MAIN PROPS -------------------------------------------------------------------------------
@@ -19,7 +20,7 @@ running = True
 
 # The player and their inventory
 player = Player()
-player_inventory = Inv(49, (400, 40), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
+player_inventory = Inv(49, (400, 70), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
 
 # List of all chests
 chests = []
@@ -34,16 +35,19 @@ new_opened_chest = None
 # Item held by the cursor
 cursor_item = None
 
+test_bar = SearchBar(screen)
+
 
 
 # FUNCTION DEFS ----------------------------------------------------------------------------
 
 # Given a position and size, creates and return a new (button, inv) tuple representing a chest
 def create_chest(pos, size, label):
-    inv = Inv(21, (10, 40), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
+    inv = Inv(21, (10, 70), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
     btn = Button(size[0], size[1], pos, label, pygame.Color(139, 82, 45))
     return (btn, inv)
 
+# Brutally compiles and returns a list of all open inventories
 def open_inventories():
     all_open = [c[1] for c in chests if c[1].is_open]
     if player_inventory.is_open:
@@ -78,8 +82,10 @@ stride = 2
 
 while running:
 
+    events = pygame.event.get()
+
     # --- Handle each event this frame ---
-    for event in pygame.event.get():
+    for event in events:
 
         # Mitigate weird bugs caused by probably implementing this event loop wrong
         if event.type == pygame.MOUSEMOTION:
