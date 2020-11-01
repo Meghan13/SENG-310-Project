@@ -42,7 +42,7 @@ def sort_by_id(list):
         list.pop(index)
     # add nulls back
     for index in range(0, null_num):
-        list.append(None)
+        new_list.append(None)
 
     return new_list
 
@@ -63,7 +63,7 @@ def sort_by_name(list):
         list.pop(index)
     # add nulls back
     for index in range(0, null_num):
-        list.append(None)
+        new_list.append(None)
     return new_list
 
 
@@ -81,7 +81,7 @@ def sort_by_type(list):
         list.pop(index)
     # add nulls back
     for index in range(0, null_num):
-        list.append(None)
+        new_list.append(None)
     return new_list
 
 
@@ -99,7 +99,7 @@ def sort_by_number(list):
         list.pop(index)
     # add nulls back
     for index in range(0, null_num):
-        list.append(None)
+        new_list.append(None)
     return new_list
 
 
@@ -121,7 +121,7 @@ def sort_by_highlight(list):
     highlight_list.extend(non_highlight_list)
     # add nulls back
     for index in range(0, null_num):
-        list.append(None)
+        highlight_list.append(None)
     return highlight_list
 
 

@@ -61,11 +61,11 @@ for i in range(0,4):
     size = (20, 20)
     chests.append(create_chest(pos, size, str(i+1)))
 
-item1 = Item(0, "weapon", "Hello", "This is a test", 10, (10, 10), "./Assets/sword.png")
-item1.set_highlight_color(pygame.Color(100, 100, 100))
+item1 = Item(0, "weapon", "Sword", "This is a test", 10, (10, 10), "./Assets/sword.png")
+# item1.set_highlight_color(pygame.Color(100, 100, 100))
 
-item2 = Item(1, "weapon", "Goodbye", "This is a test", 10, (10, 10), "./Assets/apple.png")
-item2.set_highlight(True)
+item2 = Item(1, "food", "Apple", "This is a test", 10, (10, 10), "./Assets/apple.png")
+# item2.set_highlight(True)
 
 chests[0][1].place_item(item1, 0)
 chests[0][1].place_item(item2, 1)

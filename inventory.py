@@ -2,7 +2,7 @@ import pygame
 import item
 import math
 from toolbar import Toolbar
-import sortingStuff
+import sortingStuff as sort
 
 class Inventory:
     # Global size for all item rects
@@ -87,10 +87,19 @@ class Inventory:
         # Update returns the number of the button that was pressed, set that to a number that we can use
         sort_num = self.tool_bar.update(event)
 
-        # Example of using it
+        # Yandere Dev let's GOOOOOOOOOOO!
         if sort_num == 0:
-            print("Hello")
-
+            print(len(self.contents))
+            self.contents = sort.sort_by_id(self.contents)
+            print(len(self.contents))
+        elif sort_num == 1:
+            self.contents = sort.sort_by_name(self.contents)
+        elif sort_num == 2:
+            self.contents = sort.sort_by_type(self.contents)
+        elif sort_num == 3:
+            self.contents = sort.sort_by_number(self.contents)
+        elif sort_num == 4:
+            self.contents = sort.sort_by_highlight(self.contents)
 
 
 
