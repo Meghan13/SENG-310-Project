@@ -89,9 +89,11 @@ class Inventory:
 
     def append_item(self, item: item.Item):
         for i in range(0, self.capacity):
-            if (self.contents[i] is None) or (self.contents[i].type == item.type):
-                self.place_item(item, i)
-                break
+            if (self.contents[i] is None) or (self.contents[i].get_id() == item.get_id() and self.contents[i].num < item.max_stack):
+                remaining = self.place_item(item, i)
+                if remaining is not None:
+                    self.append_item(remaining)
+                return
 
     # Main Interface
 

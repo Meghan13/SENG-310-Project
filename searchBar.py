@@ -20,7 +20,7 @@ class SearchBar:
         self.textinput = pygame_textinput.TextInput(text_color=new_text_colour)
         self.bar = pygame.Rect(new_bar_pos, (new_bar_width, new_bar_height))
         # self.screen = screen
-        self.text_input_active = True
+        self.text_input_active = False
         self.textinput.max_string_length = 10
         self.user_search_text = ""
         self.clear_button = pygame.Rect(new_clear_button_pos, (new_clear_button_width, new_clear_button_height))

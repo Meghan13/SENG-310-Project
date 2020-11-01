@@ -4,6 +4,7 @@ import itemUtil as item_util
 from inventory import Inventory as Inv
 from button import Button
 from player import Player
+import random
 
 
 # MAIN PROPS -------------------------------------------------------------------------------
@@ -19,10 +20,12 @@ running = True
 
 # The player and their inventory
 player = Player((WIDTH, HEIGHT))
-player_inventory = Inv(49, (700, 70), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
+player_inventory = Inv(49, (1100, 70), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
 
 # List of all chests
 chests = []
+
+item_source = Button(100, 100, (750, 400), 'Click for items!', pygame.Color(200, 0, 45))
 
 # If any inventory menus are open
 inventory_menu_open = False
@@ -53,6 +56,13 @@ def open_inventories():
         all_open.insert(0, player_inventory)
     return all_open
 
+def give_random_items():
+    num_stacks = random.randint(5, 10)
+    for i in range(0, num_stacks):
+        id = random.randint(0, 9)
+        stack_size = random.randint(1, 50)
+        player_inventory.append_item(item_util.create_item_by_id(id, stack_size))
+
 
 # SCENE POPULATION -------------------------------------------------------------------------
 
@@ -72,7 +82,7 @@ for i in range(0,4):
 #chests[0][1].place_item(item1, 0)
 # chests[0][1].place_item(item2, 1)
 
-for i in range(0, 9):
+for i in range(0, 10):
     chests[0][1].place_item(item_util.create_item_by_id(i, 33), i)
 
 
@@ -103,8 +113,6 @@ while running:
     # --- Handle each event this frame ---
     for event in events:
 
-
-
         # Mitigate weird bugs caused by probably implementing this event loop wrong
         if event.type == pygame.MOUSEMOTION:
             continue
@@ -124,6 +132,10 @@ while running:
                 if chest[0].hover(pygame.mouse.get_pos(), True):
                     new_opened_chest = chest
                     break
+
+            # Handle clicking on item source
+            if item_source.hover(pygame.mouse.get_pos(), True):
+                give_random_items()
 
         # Handle the inventory button being pressed
         inventory_menu_toggled = False
@@ -211,6 +223,9 @@ while running:
     for c in chests:
         c[0].hover(pygame.mouse.get_pos(), False)
         c[0].display(screen)
+
+    # Draw item source
+    item_source.display(screen)
 
     # Draw player
     player.update()
