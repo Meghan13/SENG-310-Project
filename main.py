@@ -1,10 +1,10 @@
 import pygame
 from item import Item
+import random
 import itemUtil as item_util
 from inventory import Inventory as Inv
 from button import Button
 from player import Player
-import random
 
 
 # MAIN PROPS -------------------------------------------------------------------------------
@@ -20,12 +20,12 @@ running = True
 
 # The player and their inventory
 player = Player((WIDTH, HEIGHT))
-player_inventory = Inv(49, (1100, 70), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
+player_inventory = Inv(49, (1000, 70), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
 
 # List of all chests
 chests = []
 
-item_source = Button(100, 100, (750, 400), 'Click for items!', pygame.Color(200, 0, 45))
+#item_source = Button(100, 100, (750, 400), 'Click for items!', pygame.Color(200, 0, 45))
 
 # If any inventory menus are open
 inventory_menu_open = False
@@ -37,7 +37,19 @@ new_opened_chest = None
 # Item held by the cursor
 cursor_item = None
 
-#test_bar = SearchBar(screen)
+
+#Rects for creating the room
+floor_rect = pygame.Rect((100, 100), (WIDTH-200, HEIGHT-200))
+top_wall = pygame.Rect(floor_rect.topleft, (floor_rect.width, 10))
+right_wall = pygame.Rect((floor_rect.topright[0]-10, floor_rect.topright[1]), (10, floor_rect.height))
+bottom_wall = pygame.Rect((floor_rect.bottomleft[0], floor_rect.bottomleft[1] - 10), (floor_rect.width, 10))
+left_wall = pygame.Rect(floor_rect.topleft, (10, floor_rect.height))
+
+# Button for adding items
+item_source = Button(30, 150, (floor_rect.centerx-75, floor_rect.bottom-30), "Go forage", pygame.Color(139, 82, 45))
+
+
+# test_bar = SearchBar(screen)
 
 
 
@@ -45,9 +57,10 @@ cursor_item = None
 
 # Given a position and size, creates and return a new (button, inv) tuple representing a chest
 def create_chest(pos, size, label):
-    inv = Inv(21, (10, 70), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
+    inv = Inv(21, (500, 70), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
     btn = Button(size[0], size[1], pos, label, pygame.Color(139, 82, 45))
     return (btn, inv)
+
 
 # Brutally compiles and returns a list of all open inventories
 def open_inventories():
@@ -63,13 +76,20 @@ def give_random_items():
         stack_size = random.randint(1, 50)
         player_inventory.append_item(item_util.create_item_by_id(id, stack_size))
 
+def draw_house():
+    pygame.draw.rect(screen, pygame.Color(180, 110, 66), floor_rect)
+    pygame.draw.rect(screen, pygame.Color(90, 55, 33), top_wall)
+    pygame.draw.rect(screen, pygame.Color(90, 55, 33), right_wall)
+    pygame.draw.rect(screen, pygame.Color(90, 55, 33), bottom_wall)
+    pygame.draw.rect(screen, pygame.Color(90, 55, 33), left_wall)
+
 
 # SCENE POPULATION -------------------------------------------------------------------------
 
-for i in range(0,4):
-    pos = (10 + i*25, 10)
-    size = (20, 20)
-    chests.append(create_chest(pos, size, str(i+1)))
+for i in range(0, 4):
+    pos = (120 + i * 110, 120)
+    size = (50, 100)
+    chests.append(create_chest(pos, size, "Chest " + str(i + 1)))
 
 #item1 = Item(0, "tool", "pickaxe", "This is a test", 10, (10, 10), "./Assets/pickaxe.png")
 # item1.set_highlight_color(pygame.Color(100, 100, 100))
@@ -112,6 +132,8 @@ while running:
 
     # --- Handle each event this frame ---
     for event in events:
+
+
 
         # Mitigate weird bugs caused by probably implementing this event loop wrong
         if event.type == pygame.MOUSEMOTION:
@@ -219,6 +241,10 @@ while running:
     # Draw background
     screen.fill(pygame.Color(0, 0, 0))
 
+    # Draw the house
+    draw_house()
+
+    # Draw random button
     # Draw chests
     for c in chests:
         c[0].hover(pygame.mouse.get_pos(), False)
@@ -226,7 +252,7 @@ while running:
 
     # Draw item source
     item_source.display(screen)
-
+    item_source.hover(pygame.mouse.get_pos(), False)
     # Draw player
     player.update()
     player_list.draw(screen)
