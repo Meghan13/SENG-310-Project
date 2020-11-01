@@ -1,5 +1,6 @@
 import pygame
 from item import Item
+import random
 import itemUtil as item_util
 from inventory import Inventory as Inv
 from button import Button
@@ -34,6 +35,9 @@ new_opened_chest = None
 # Item held by the cursor
 cursor_item = None
 
+# Button for adding items
+random_button = Button(30, 100, (10, 300), "Random", pygame.Color(139, 82, 45))
+
 #test_bar = SearchBar(screen)
 
 
@@ -53,6 +57,14 @@ def open_inventories():
         all_open.insert(0, player_inventory)
     return all_open
 
+
+def random_items():
+    random.seed()
+    slots_num = random.randrange(0,  10, 1)
+    for num in range(slots_num):
+        id_num = random.randrange(0, 10, 1)
+        item_num = random.randrange(0, 50, 1)
+        player_inventory.append_item(item_util.create_item_by_id(id_num, item_num))
 
 # SCENE POPULATION -------------------------------------------------------------------------
 
@@ -81,7 +93,6 @@ player.rect.y = 150  # go to y
 player_list = pygame.sprite.Group()
 player_list.add(player)
 stride = 8
-
 
 # MASTER LOOP ------------------------------------------------------------------------------
 
@@ -124,6 +135,8 @@ while running:
                 if chest[0].hover(pygame.mouse.get_pos(), True):
                     new_opened_chest = chest
                     break
+            if random_button.hover(pygame.mouse.get_pos(), True):
+                random_items()
 
         # Handle the inventory button being pressed
         inventory_menu_toggled = False
@@ -207,10 +220,15 @@ while running:
     # Draw background
     screen.fill(pygame.Color(0, 0, 0))
 
+    # Draw random button
+    random_button.display(screen)
+
     # Draw chests
     for c in chests:
         c[0].hover(pygame.mouse.get_pos(), False)
         c[0].display(screen)
+
+
 
     # Draw player
     player.update()
