@@ -29,31 +29,37 @@ class SearchBar:
         self.new_clear_button_height = new_clear_button_height
 
     def update(self, event):
+        if self.text_input_active:
+            self.textinput.update([event])
+            self.user_search_text = self.textinput.input_string
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = event.pos
+
             # Handles clicking on clear button
             if self.clear_button.collidepoint(x, y):
-                self.search_bar_clear_button([event])
+                self.search_bar_clear_button([])
+
             # Handles clicking of search bar
             elif self.bar.collidepoint(x, y):
                 # self.screen.blit(self.textinput.get_surface(), self.BAR_POS)
-                self.textinput.update([event])
+                # self.textinput.update([event])
+                self.textinput.cursor_visible = True
                 self.text_input_active = True
 
             # Handles toggling of active search bar
             elif not self.bar.collidepoint(x, y):
+                # self.textinput.update([event])
                 self.textinput.cursor_visible = False
                 self.text_input_active = False
-                self.textinput.update([event])
+
 
         # Handles search upon pressing enter/return key
         # if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.text_input_active:
 
         # print(self.user_search_text) #For debugging
 
-        if self.text_input_active:
-            self.textinput.update([event])
-            self.user_search_text = self.textinput.input_string
+
 
     def search_bar_clear_button(self, events):
         self.textinput.input_string = ""

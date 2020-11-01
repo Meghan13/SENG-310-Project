@@ -12,7 +12,6 @@ HEIGHT = 900
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
-clock.tick(15)
 
 # If script is running
 running = True
@@ -83,8 +82,21 @@ while running:
 
     events = pygame.event.get()
 
+    # Placate text input module by violating all concept of code architecture
+    # Also intercept key events while text is being entered
+    textbox_active = False
+    if inventory_menu_open:
+        for inv in open_inventories():
+            if inv.tool_bar.search_bar.text_input_active:
+                textbox_active = True
+
+                if len(events) == 0:
+                    inv.tool_bar.search_bar.textinput.update([])
+
     # --- Handle each event this frame ---
     for event in events:
+
+
 
         # Mitigate weird bugs caused by probably implementing this event loop wrong
         if event.type == pygame.MOUSEMOTION:
@@ -108,7 +120,7 @@ while running:
 
         # Handle the inventory button being pressed
         inventory_menu_toggled = False
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN and not textbox_active:
             if event.key == pygame.K_i:
                 inventory_menu_toggled = True
 
@@ -124,7 +136,7 @@ while running:
                 player.control(0, stride)
 
         # control the player
-        if event.type == pygame.KEYUP:
+        if event.type == pygame.KEYUP and not textbox_active:
             if event.key == pygame.K_LEFT or event.key == ord('a'):
                 player.control(stride, 0)
             if event.key == pygame.K_RIGHT or event.key == ord('d'):
@@ -204,5 +216,6 @@ while running:
         cursor_item.display(screen)
 
     pygame.display.update()
+    clock.tick(60)
 
 
