@@ -31,6 +31,9 @@ class Item:
     def get_num(self):
         return self.num
 
+    def get_max_stack(self):
+        return self.max_stack
+
     def get_pos(self):
         return self.pos
 
@@ -63,6 +66,9 @@ class Item:
 
     def set_num(self, item_num: int):
         self.num = item_num
+
+    def set_max_stack(self, new_max: int):
+        self.max_stack = new_max
 
     def set_pos(self, item_pos: tuple):
         self.pos = item_pos
@@ -97,7 +103,7 @@ class Item:
         # reset the text to be the number of items
         text = self.font.render(str(self.num), True, pygame.Color(255, 255, 255))
         # display the number of items
-        screen.blit(text, self.rect.midbottom)
+        screen.blit(text, (self.rect.midbottom[0]-5, self.rect.midbottom[1]-10))
 
     # This function checks to see whether or not the mouse is hovering over
     # an items rect
@@ -120,6 +126,7 @@ class Item:
     pos = None    # position for the item and rect
     rect = None   # item rect for collisions/hover detection
     image = None  # a string which stores the location of the image for an item
+    max_stack = 99
     is_highlighted = False
     highlight_sort = False
     highlight_color = pygame.color.Color(255, 255, 0)

@@ -73,7 +73,7 @@ player.rect.x = 150  # go to x
 player.rect.y = 150  # go to y
 player_list = pygame.sprite.Group()
 player_list.add(player)
-stride = 2
+stride = 8
 
 
 # MASTER LOOP ------------------------------------------------------------------------------
