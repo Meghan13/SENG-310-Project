@@ -138,6 +138,8 @@ class Inventory:
             if self.contents[i] is not None:
                 self.contents[i].set_pos(cell_pos)
                 self.contents[i].display(screen)
+                # Display amount of items and description
+                self.contents[i].description(screen, pygame.mouse.get_pos())
 
         # Draw toolbar and get text from  text_input
         self.tool_bar.display(screen)
