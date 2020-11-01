@@ -124,5 +124,5 @@ class Item:
     highlight_sort = False
     highlight_color = pygame.color.Color(255, 255, 0)
 
-    WIDTH = 48    # a constant width for the image and rect
-    HEIGHT = 48   # a constant height for the image and rect
+    WIDTH = 64    # a constant width for the image and rect
+    HEIGHT = 64   # a constant height for the image and rect

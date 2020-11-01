@@ -19,7 +19,7 @@ running = True
 
 # The player and their inventory
 player = Player()
-player_inventory = Inv(49, (400, 70), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
+player_inventory = Inv(49, (700, 70), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
 
 # List of all chests
 chests = []
@@ -64,11 +64,11 @@ for i in range(0,4):
 item1 = Item(0, "weapon", "Hello", "This is a test", 10, (10, 10), "./Assets/sword.png")
 item1.set_highlight_color(pygame.Color(100, 100, 100))
 
-item2 = Item(1, "weapon", "Goodbye", "This is a test", 10, (10, 10), "./Assets/sword.png")
+item2 = Item(1, "weapon", "Goodbye", "This is a test", 10, (10, 10), "./Assets/apple.png")
 item2.set_highlight(True)
 
 chests[0][1].place_item(item1, 0)
-chests[1][1].place_item(item2, 1)
+chests[0][1].place_item(item2, 1)
 
 player.rect.x = 150  # go to x
 player.rect.y = 150  # go to y

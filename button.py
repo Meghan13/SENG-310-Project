@@ -73,7 +73,6 @@ class Button:
             # change the colour to the highlight colour
             self.color = self.hover_color
             if clicked:
-                print(self.text)
                 return True
         # when not hovering reset colour
         else:

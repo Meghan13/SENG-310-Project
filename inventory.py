@@ -2,7 +2,7 @@ import pygame
 import item
 import math
 from toolbar import Toolbar
-
+import sortingStuff
 
 class Inventory:
     # Global size for all item rects
@@ -84,8 +84,14 @@ class Inventory:
     # Main Interface
 
     def menu_update(self, event):
-        self.tool_bar.update(event)
-        print(self.tool_bar.get_text())
+        # Update returns the number of the button that was pressed, set that to a number that we can use
+        sort_num = self.tool_bar.update(event)
+
+        # Example of using it
+        if sort_num == 0:
+            print("Hello")
+
+
 
 
     def items_update(self, event, cursor_item):
@@ -101,13 +107,14 @@ class Inventory:
             pos = self.def_pos
         if cells_per_row is None:
             cells_per_row = self.def_cells_per_row
-
         self.pos = pos
         self.cells_per_row = cells_per_row
         self.rect = pygame.Rect(self.pos, self.get_size())
         self.is_open = True
+        self.tool_bar.set_active(True)
 
     def close(self):
+        self.tool_bar.set_active(False)
         self.is_open = False
 
     def draw(self, screen: pygame.display):
@@ -123,7 +130,7 @@ class Inventory:
                 self.contents[i].set_pos(cell_pos)
                 self.contents[i].display(screen)
 
-        #Draw toolbar
+        # Draw toolbar and get text from  text_input
         self.tool_bar.display(screen)
         self.search_items(self.tool_bar.get_text())
 
@@ -152,7 +159,7 @@ class Inventory:
 
     # Use searchBar and inventory to find items from user input and highlights them
     def search_items(self, search_term):
-        print('Search term: ' + search_term)
+        #print('Search term: ' + search_term)
         if search_term == '':
             self.unhighlight_all_items()
             return
