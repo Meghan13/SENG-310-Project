@@ -24,12 +24,15 @@ class Player(pygame.sprite.Sprite):
 
         #found this if we need more than one player
         for i in range(1, 5):
-            img = pygame.image.load('Assets/character.png')
+            img = pygame.image.load('Assets/player_right.png')
             #img.convert_alpha()  # optimise alpha
             #img.set_colorkey(ALPHA)  # set alpha
+            img = pygame.transform.scale(img, (150, 175))
             self.images.append(img)
             self.image = self.images[0]
+
             self.rect = self.image.get_rect()
+
 
     # Player movement control
     def control(self, x, y):
