@@ -45,8 +45,8 @@ class Player(pygame.sprite.Sprite):
 
     # Update player position and direction
     def update(self):
-        self.rect.x = min(max(self.rect.x + self.movex*self.speed, 0), self.bounds[0])
-        self.rect.y = min(max(self.rect.y + self.movey*self.speed, 0), self.bounds[1])
+        self.rect.x = min(max(self.rect.x + self.movex*self.speed, 110), self.bounds[0]-110)
+        self.rect.y = min(max(self.rect.y + self.movey*self.speed, 110), self.bounds[1]-110)
 
         # moving left
         if self.movex < 0:
