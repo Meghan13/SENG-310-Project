@@ -31,7 +31,6 @@ class SearchBar:
     def update(self, event):
         if self.text_input_active:
             self.textinput.update([event])
-            self.user_search_text = self.textinput.input_string
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = event.pos
@@ -52,6 +51,8 @@ class SearchBar:
                 # self.textinput.update([event])
                 self.textinput.cursor_visible = False
                 self.text_input_active = False
+
+        self.user_search_text = self.textinput.input_string
 
 
         # Handles search upon pressing enter/return key

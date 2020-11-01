@@ -17,7 +17,7 @@ clock = pygame.time.Clock()
 running = True
 
 # The player and their inventory
-player = Player()
+player = Player((WIDTH, HEIGHT))
 player_inventory = Inv(49, (700, 70), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
 
 # List of all chests

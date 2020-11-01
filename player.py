@@ -3,6 +3,7 @@ from typing import Tuple
 import pygame
 import sys
 import os
+import math
 
 from inventory import Inventory
 
@@ -14,20 +15,23 @@ from inventory import Inventory
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self, bounds):
         pygame.sprite.Sprite.__init__(self)
+        self.speed = 4
         self.movex = 0
         self.movey = 0
         self.frame = 0
         self.images = []
         self.animation = 4
+        self.sprite_scale = (150, 175)
+        self.bounds = (bounds[0] - self.sprite_scale[0], bounds[1] - self.sprite_scale[1])
 
         #found this if we need more than one player
         for i in range(1, 5):
             img = pygame.image.load('Assets/player_right.png')
             #img.convert_alpha()  # optimise alpha
             #img.set_colorkey(ALPHA)  # set alpha
-            img = pygame.transform.scale(img, (150, 175))
+            img = pygame.transform.scale(img, self.sprite_scale)
             self.images.append(img)
             self.image = self.images[0]
 
@@ -41,8 +45,8 @@ class Player(pygame.sprite.Sprite):
 
     # Update player position and direction
     def update(self):
-        self.rect.x = self.rect.x + self.movex
-        self.rect.y = self.rect.y + self.movey
+        self.rect.x = min(max(self.rect.x + self.movex*self.speed, 0), self.bounds[0])
+        self.rect.y = min(max(self.rect.y + self.movey*self.speed, 0), self.bounds[1])
 
         # moving left
         if self.movex < 0:
