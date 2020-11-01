@@ -98,7 +98,7 @@ class Item:
         # Check to see if mouse is over (second variable not used yet)
         if self.hover(m_pos, False):
             # create a text object based on our global item font
-            text = self.font.render("id:"+str(self.i_id)+"   "+self.info, True, pygame.Color(255, 255, 255))
+            text = self.font.render(self.name+"   "+self.info, True, pygame.Color(255, 255, 255))
             # display text
             screen.blit(text, (m_pos[0], m_pos[1] - 10))
         # reset the text to be the number of items
