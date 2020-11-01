@@ -66,8 +66,14 @@ item1 = Item(0, "tool", "pickaxe", "This is a test", 10, (10, 10), "./Assets/pic
 item2 = Item(1, "food", "Apple", "This is a test", 10, (10, 10), "./Assets/apple.png")
 # item2.set_highlight(True)
 
+item3 = Item(1, "food", "Apple", "This is a test", 95, (10, 10), "./Assets/apple.png")
+
 chests[0][1].place_item(item1, 0)
-chests[0][1].place_item(item2, 1)
+# chests[0][1].place_item(item2, 1)
+
+for i in range(1, 11):
+    chests[0][1].place_item(Item(1, "food", "Apple", "This is a test", 10, (10, 10), "./Assets/apple.png"), i)
+
 
 player.rect.x = 150  # go to x
 player.rect.y = 150  # go to y

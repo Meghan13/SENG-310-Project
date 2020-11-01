@@ -71,14 +71,26 @@ class Inventory:
         return None
 
     def place_item(self, item: item.Item, index: int):
-        taken = self.contents[index]
-        self.contents[index] = item
+        if self.contents[index] is not None and item is not None and self.contents[index].get_id() == item.get_id():
+            total_num = item.num + self.contents[index].num
+            if total_num <= item.max_stack:
+                self.contents[index].set_num(total_num)
+                taken = None
+            else:
+                item.set_num(total_num - item.max_stack)
+                self.contents[index].set_num(item.max_stack)
+                taken = item
+
+        else:
+            taken = self.contents[index]
+            self.contents[index] = item
+
         return taken
 
     def append_item(self, item: item.Item):
         for i in range(0, self.capacity):
-            if self.contents[i] is None:
-                self.contents[i] = item
+            if (self.contents[i] is None) or (self.contents[i].type == item.type):
+                self.place_item(item, i)
                 break
 
     # Main Interface
