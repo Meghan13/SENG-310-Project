@@ -114,6 +114,8 @@ class Inventory:
             sorted = sort.sort_by_type(self.contents)
         elif sort_num == 3:
             sorted = sort.sort_by_number(self.contents)
+            self.contents = sorted
+            return
         elif sort_num == 4:
             sorted = sort.sort_by_highlight(self.contents)
         else:
