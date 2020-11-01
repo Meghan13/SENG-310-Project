@@ -5,7 +5,7 @@ pygame.init()
 
 
 class Item:
-    def __init__(self, item_id: int, item_type: str, item_name: str, item_info: str, item_num: int, item_pos: tuple, image_dir: str):
+    def __init__(self, item_id: int, item_type: str, item_name: str, item_info: str, item_num: int, item_pos: tuple, image_dir: str, max_stack=99):
         self.i_id = item_id
         self.type = item_type
         self.name = item_name
@@ -15,6 +15,7 @@ class Item:
         self.rect = pygame.Rect(self.pos, (self.WIDTH, self.HEIGHT))
         self.image = pygame.image.load(image_dir)
         self.image = pygame.transform.scale(self.image, (self.WIDTH, self.HEIGHT))
+        self.max_stack = max_stack
 
     def get_id(self):
         return self.i_id

@@ -1,5 +1,6 @@
 import pygame
 from item import Item
+import itemUtil as item_util
 from inventory import Inventory as Inv
 from button import Button
 from player import Player
@@ -60,19 +61,19 @@ for i in range(0,4):
     size = (20, 20)
     chests.append(create_chest(pos, size, str(i+1)))
 
-item1 = Item(0, "tool", "pickaxe", "This is a test", 10, (10, 10), "./Assets/pickaxe.png")
+#item1 = Item(0, "tool", "pickaxe", "This is a test", 10, (10, 10), "./Assets/pickaxe.png")
 # item1.set_highlight_color(pygame.Color(100, 100, 100))
 
-item2 = Item(1, "food", "Apple", "This is a test", 10, (10, 10), "./Assets/apple.png")
+#item2 = Item(1, "food", "Apple", "This is a test", 10, (10, 10), "./Assets/apple.png")
 # item2.set_highlight(True)
 
-item3 = Item(1, "food", "Apple", "This is a test", 95, (10, 10), "./Assets/apple.png")
+#item3 = Item(1, "food", "Apple", "This is a test", 95, (10, 10), "./Assets/apple.png")
 
-chests[0][1].place_item(item1, 0)
+#chests[0][1].place_item(item1, 0)
 # chests[0][1].place_item(item2, 1)
 
-for i in range(1, 11):
-    chests[0][1].place_item(Item(1, "food", "Apple", "This is a test", 10, (10, 10), "./Assets/apple.png"), i)
+for i in range(0, 9):
+    chests[0][1].place_item(item_util.create_item_by_id(i, 33), i)
 
 
 player.rect.x = 150  # go to x
