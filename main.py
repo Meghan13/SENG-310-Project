@@ -167,9 +167,12 @@ while running:
 
             # If chest is clicked, replace open chest inventory
             if new_opened_chest is not None:
-                if len(open_inventories()) > 1:
-                    open_inventories()[1].close()
-                new_opened_chest[1].open()
+                if new_opened_chest[1] in open_inventories():
+                    new_opened_chest[1].close()
+                else:
+                    if len(open_inventories()) > 1:
+                        open_inventories()[1].close()
+                    new_opened_chest[1].open()
 
             # If the inventory menu is closed, close all open inventories and return
             # the cursor item to the player inventory
