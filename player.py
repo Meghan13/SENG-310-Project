@@ -17,7 +17,7 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self, bounds):
         pygame.sprite.Sprite.__init__(self)
-        self.speed = 4
+        self.speed = 1
         self.movex = 0
         self.movey = 0
         self.frame = 0
