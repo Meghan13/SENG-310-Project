@@ -88,6 +88,9 @@ class Inventory:
         return taken
 
     def append_item(self, item: item.Item):
+        if item is None:
+            return
+
         for i in range(0, self.capacity):
             if (self.contents[i] is None) or (self.contents[i].get_id() == item.get_id() and self.contents[i].num < item.max_stack):
                 remaining = self.place_item(item, i)
@@ -104,16 +107,21 @@ class Inventory:
         # Yandere Dev let's GOOOOOOOOOOO!
         if sort_num == 0:
             print(len(self.contents))
-            self.contents = sort.sort_by_id(self.contents)
-            print(len(self.contents))
+            sorted = sort.sort_by_id(self.contents)
         elif sort_num == 1:
-            self.contents = sort.sort_by_name(self.contents)
+            sorted = sort.sort_by_name(self.contents)
         elif sort_num == 2:
-            self.contents = sort.sort_by_type(self.contents)
+            sorted = sort.sort_by_type(self.contents)
         elif sort_num == 3:
-            self.contents = sort.sort_by_number(self.contents)
+            sorted = sort.sort_by_number(self.contents)
         elif sort_num == 4:
-            self.contents = sort.sort_by_highlight(self.contents)
+            sorted = sort.sort_by_highlight(self.contents)
+        else:
+            sorted = self.contents
+
+        self.contents = [None] * self.capacity
+        for i in sorted:
+            self.append_item(i)
 
 
 
