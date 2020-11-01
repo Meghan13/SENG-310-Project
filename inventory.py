@@ -117,7 +117,7 @@ class Inventory:
         elif sort_num == 4:
             sorted = sort.sort_by_highlight(self.contents)
         else:
-            sorted = self.contents
+            return
 
         self.contents = [None] * self.capacity
         for i in sorted:
