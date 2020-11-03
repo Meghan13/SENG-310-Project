@@ -83,7 +83,7 @@ def give_random_items():
         player_inventory.append_item(item_util.create_item_by_id(id, stack_size))
 
 def draw_house():
-    pygame.draw.rect(screen, pygame.Color(180, 110, 66), floor_rect)
+    pygame.draw.rect(screen, pygame.Color(160, 120, 90), floor_rect)
     pygame.draw.rect(screen, pygame.Color(90, 55, 33), top_wall)
     pygame.draw.rect(screen, pygame.Color(90, 55, 33), right_wall)
     pygame.draw.rect(screen, pygame.Color(90, 55, 33), bottom_wall)
@@ -96,7 +96,7 @@ def update_open_chests(pinned: Inv):
         open_chests.remove(pinned)
     if len(open_chests) > 2:
         open_chests = open_chests[:2]
-    open_chests = sorted(open_chests, key=lambda c: player.distance_from_chest(c))
+    #open_chests = sorted(open_chests, key=lambda c: player.distance_from_chest(c))
     open_chests.insert(0, pinned)
 
     # Close chests that have become too far away
@@ -117,7 +117,10 @@ def update_open_chests(pinned: Inv):
 
 def draw_open_chest_indicators():
     for c in open_chests:
-        pygame.draw.line(screen, pygame.Color(255, 255, 0), c.get_pos(), c.chest_button.get_pos())
+        if c == pinned_chest:
+            pygame.draw.line(screen, pygame.Color(255, 255, 0), c.get_pos(), c.chest_button.get_pos())
+        else:
+            pygame.draw.line(screen, pygame.Color(0, 200, 0), c.get_pos(), c.chest_button.get_pos())
 
 
 # SCENE POPULATION -------------------------------------------------------------------------

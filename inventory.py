@@ -37,6 +37,7 @@ class Inventory:
         # A reference to the chest this inventory is bound to, if any
         self.chest_button = chest_button
 
+        self.is_pinned = False
         # Inventory menu is initialized to a "closed" state
         self.is_open = False
 
@@ -184,6 +185,11 @@ class Inventory:
         # Draw toolbar and get text from  text_input
         self.tool_bar.display(screen)
         self.search_items(self.tool_bar.get_text())
+
+        #if self.is_pinned:
+        #   corners =
+
+
 
     # Utility
 
