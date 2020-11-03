@@ -169,6 +169,7 @@ class Inventory:
                 self.contents[i].description(screen, pygame.mouse.get_pos())
 
         # Draw toolbar and get text from  text_input
+        self.tool_bar.set_name("Hello")
         self.tool_bar.display(screen)
         self.search_items(self.tool_bar.get_text())
 
