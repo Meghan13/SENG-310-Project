@@ -10,7 +10,7 @@ class Inventory:
     # Global padding between inventory cells
     cell_padding = 4
 
-    def __init__(self, capacity: int, def_pos: tuple, def_cells_per_row: int, color: pygame.Color, cell_color: pygame.Color):
+    def __init__(self, capacity: int, def_pos: tuple, def_cells_per_row: int, color: pygame.Color, cell_color: pygame.Color, name: str, chest_button=None):
         # The inventory's contents (a list of items)
         self.contents = [None] * capacity
         # Maximum number of items the inventory can hold
@@ -32,6 +32,11 @@ class Inventory:
 
         #self.search_bar = SearchBar(new_bar_pos = (def_pos[0], def_pos[1]-30))
         self.tool_bar = Toolbar(self.rect.width, self.rect.topleft, pygame.Color(100, 100, 100), color)
+        self.tool_bar.set_name(name)
+
+        # A reference to the chest this inventory is bound to, if any
+        self.chest_button = chest_button
+
         # Inventory menu is initialized to a "closed" state
         self.is_open = False
 
@@ -45,6 +50,13 @@ class Inventory:
 
     def get_pos(self):
         return self.pos
+
+    def set_pos(self, pos):
+        prev_pos = self.pos
+        self.pos = pos
+        delta = (pos[0] - prev_pos[0], pos[1] - prev_pos[1])
+        self.rect.move_ip(delta)
+        self.tool_bar.move_by(delta)
 
     def get_size(self):
         width = (self.cell_size[0] + self.cell_padding) * self.cells_per_row + self.cell_padding
@@ -140,7 +152,8 @@ class Inventory:
             pos = self.def_pos
         if cells_per_row is None:
             cells_per_row = self.def_cells_per_row
-        self.pos = pos
+
+        self.set_pos(pos)
         self.cells_per_row = cells_per_row
         self.rect = pygame.Rect(self.pos, self.get_size())
         self.is_open = True
@@ -169,7 +182,6 @@ class Inventory:
                 self.contents[i].description(screen, pygame.mouse.get_pos())
 
         # Draw toolbar and get text from  text_input
-        self.tool_bar.set_name("Hello")
         self.tool_bar.display(screen)
         self.search_items(self.tool_bar.get_text())
 

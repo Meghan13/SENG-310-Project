@@ -69,6 +69,11 @@ class SearchBar:
     def get_user_search_text(self):
         return self.user_search_text
 
+    def move_by(self, delta):
+        self.bar.move_ip(delta)
+        self.clear_button.move_ip(delta)
+        self.new_clear_button_pos = (self.new_clear_button_pos[0] + delta[0], self.new_clear_button_pos[1] + delta[1])
+
     def draw(self, screen):
         pygame.draw.rect(screen, pygame.Color(225, 225, 225), self.bar)
         pygame.draw.rect(screen, pygame.Color(255, 0, 0), self.clear_button)

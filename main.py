@@ -20,12 +20,18 @@ running = True
 
 # The player and their inventory
 player = Player((WIDTH, HEIGHT))
-player_inventory = Inv(49, (1000, 70), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
+player_inventory = Inv(49, (1000, 70), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0), 'Carried Items')
+
+player_interact_range = 300
 
 # List of all chests
 chests = []
-
-#item_source = Button(100, 100, (750, 400), 'Click for items!', pygame.Color(200, 0, 45))
+# The main open chest (multi-chest access)
+pinned_chest = None
+# List of currently open chests (multi-chest access)
+open_chests = []
+# Vertical spacing of chest inventory UIs
+chest_inventory_spacing = 250
 
 # If any inventory menus are open
 inventory_menu_open = False
@@ -38,7 +44,7 @@ new_opened_chest = None
 cursor_item = None
 
 
-#Rects for creating the room
+# Rects for creating the room
 floor_rect = pygame.Rect((100, 100), (WIDTH-200, HEIGHT-200))
 top_wall = pygame.Rect(floor_rect.topleft, (floor_rect.width, 10))
 right_wall = pygame.Rect((floor_rect.topright[0]-10, floor_rect.topright[1]), (10, floor_rect.height))
@@ -57,8 +63,8 @@ item_source = Button(30, 150, (floor_rect.centerx-75, floor_rect.bottom-30), "Go
 
 # Given a position and size, creates and return a new (button, inv) tuple representing a chest
 def create_chest(pos, size, label):
-    inv = Inv(21, (500, 70), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0))
     btn = Button(size[0], size[1], pos, label, pygame.Color(139, 82, 45))
+    inv = Inv(21, (500, 70), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0), label, btn)
     return (btn, inv)
 
 
@@ -82,6 +88,32 @@ def draw_house():
     pygame.draw.rect(screen, pygame.Color(90, 55, 33), right_wall)
     pygame.draw.rect(screen, pygame.Color(90, 55, 33), bottom_wall)
     pygame.draw.rect(screen, pygame.Color(90, 55, 33), left_wall)
+
+def update_open_chests(pinned: Inv):
+    global open_chests
+    open_chests = [c[1] for c in chests if player.is_chest_in_player_range(c[1], player_interact_range)]
+    if pinned in open_chests:
+        open_chests.remove(pinned)
+    if len(open_chests) > 2:
+        open_chests = open_chests[:2]
+    open_chests = sorted(open_chests, key=lambda c: player.distance_from_chest(c))
+    open_chests.insert(0, pinned)
+
+    # Close chests that have become too far away
+    prev_open_chests = open_inventories()[1:]
+    for c in prev_open_chests:
+        if c not in open_chests:
+            c.close()
+
+    # Open chests that have become near enough
+    for c in open_chests:
+        if c not in prev_open_chests:
+            c.open()
+
+    # Order menus by closeness (with pinned at the top)
+    for i in range(0, len(open_chests)):
+        #print(i.tool_bar.get_name())
+        open_chests[i].set_pos((500, 70 + i*chest_inventory_spacing))
 
 
 # SCENE POPULATION -------------------------------------------------------------------------
@@ -196,7 +228,7 @@ while running:
                 inventory_menu_open = True
                 player_inventory.open()
                 if new_opened_chest:
-                    new_opened_chest[1].open()
+                    pinned_chest = new_opened_chest[1]
 
         # --- Stuff that only happens when inventories are open ---
         else:
@@ -208,18 +240,20 @@ while running:
 
             # If chest is clicked, replace open chest inventory
             if new_opened_chest is not None:
-                if new_opened_chest[1] in open_inventories():
-                    new_opened_chest[1].close()
+                # Clicking on the pinned chest again closes all chests
+                if new_opened_chest[1] == pinned_chest:
+                    pinned_chest = None
+                    for c in open_inventories()[1:]:
+                        c.close()
+                # Clicking on a different chest makes it the new pinned chest
                 else:
-                    if len(open_inventories()) > 1:
-                        open_inventories()[1].close()
-                    new_opened_chest[1].open()
+                    pinned_chest = new_opened_chest[1]
 
             # If the inventory menu is closed, close all open inventories and return
             # the cursor item to the player inventory
             if inventory_menu_toggled:
-                print('!')
                 inventory_menu_open = False
+                pinned_chest = None
 
                 if cursor_item is not None:
                     player_inventory.append_item(cursor_item)
@@ -230,10 +264,11 @@ while running:
 
     # --- Update objects ---
 
-    #if not inventory_menu_open:
+    if inventory_menu_open:
+        if pinned_chest:
+            update_open_chests(pinned_chest)
 
 
-    #else:
 
 
     # --- Draw objects ---

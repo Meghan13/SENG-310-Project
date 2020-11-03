@@ -54,6 +54,10 @@ class Button:
     def set_pos(self, new_pos):
         self.pos = new_pos
 
+    def move_by(self, delta):
+        self.set_pos((self.pos[0] + delta[0], self.pos[1] + delta[1]))
+        self.rect.move_ip(delta)
+
     def set_text(self, new_text):
         self.text = new_text
 

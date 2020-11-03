@@ -67,13 +67,17 @@ class Player(pygame.sprite.Sprite):
     # Returns boolean value for whether or not inventory should be accessible
     """
     def is_chest_in_player_range(self, inventory: Inventory, desired_range: int):
-        return ((self.rect.x - inventory.rect.x)**2 + (self.rect.y - inventory.rect.y)**2) < desired_range**2
+        if not inventory.chest_button:
+            return False
+
+        return ((self.rect.x - inventory.chest_button.get_pos()[0])**2 + (self.rect.y - inventory.chest_button.get_pos()[1])**2) < desired_range**2
 
     """
         Returns distance from player to specified chest
     """
     def distance_from_chest(self, chest: Inventory):
-        return (self.rect.x - chest.rect.x)**2 + (self.rect.y - chest.rect.y)**2
+        if chest.chest_button:
+            return math.sqrt((self.rect.x - chest.chest_button.rect.x)**2 + (self.rect.y - chest.chest_button.rect.y)**2)
 
     """
        Finds the nearest chest from a list of chests passed in 
