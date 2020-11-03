@@ -34,7 +34,7 @@ class Toolbar:
         self.by_id = Button(self.BUTTON_HEIGHT, int(but_width), (self.draw_rect.topleft[0] + 5, self.draw_rect.topleft[1]+5), "Sort", new_but_color)
         self.by_name = Button(self.BUTTON_HEIGHT, int(but_width), (self.draw_rect.topleft[0] + but_width + 10, self.draw_rect.topleft[1]+5), "A-Z", new_but_color)
         self.by_type = Button(self.BUTTON_HEIGHT, int(but_width), (self.draw_rect.topleft[0] + 2 * but_width + 15, self.draw_rect.topleft[1]+5), "Type", new_but_color)
-        self.by_num = Button(self.BUTTON_HEIGHT, int(but_width), (self.draw_rect.topleft[0] + 3 * but_width + 20, self.draw_rect.topleft[1]+5), "0-9", new_but_color)
+        self.by_num = Button(self.BUTTON_HEIGHT, int(but_width), (self.draw_rect.topleft[0] + 3 * but_width + 20, self.draw_rect.topleft[1]+5), "Amount", new_but_color)
         self.by_highlight = Button(self.BUTTON_HEIGHT, int(but_width), (self.draw_rect.topleft[0] + 4 * but_width + 25, self.draw_rect.topleft[1]+5), "Highlight", new_but_color)
 
         # ADd them all to a list for ease of use
