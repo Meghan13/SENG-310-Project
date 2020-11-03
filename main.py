@@ -115,6 +115,10 @@ def update_open_chests(pinned: Inv):
         #print(i.tool_bar.get_name())
         open_chests[i].set_pos((500, 70 + i*chest_inventory_spacing))
 
+def draw_open_chest_indicators():
+    for c in open_chests:
+        pygame.draw.line()
+
 
 # SCENE POPULATION -------------------------------------------------------------------------
 

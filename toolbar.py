@@ -87,7 +87,7 @@ class Toolbar:
         self.draw_rect.move_ip(delta)
         self.search_bar.move_by(delta)
         for b in self.buttons:
-            b.set_pos((b.get_pos()[0] + delta[0], b.get_pos()[1] + delta[1]))
+            b.move_by(delta)
 
     def display(self, screen):
         # If the toolbar is active, draw everything
