@@ -264,6 +264,7 @@ while running:
             if inventory_menu_toggled:
                 inventory_menu_open = False
                 pinned_chest = None
+                open_chests = []
 
                 if cursor_item is not None:
                     player_inventory.append_item(cursor_item)
@@ -309,7 +310,8 @@ while running:
         cursor_item.display(screen)
 
     # Draw lines between chests and their inventories
-    draw_open_chest_indicators()
+    if inventory_menu_open:
+        draw_open_chest_indicators()
 
     pygame.display.update()
     clock.tick(60)
