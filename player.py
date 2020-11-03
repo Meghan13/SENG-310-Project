@@ -70,14 +70,14 @@ class Player(pygame.sprite.Sprite):
         if not inventory.chest_button:
             return False
 
-        return ((self.rect.x - inventory.chest_button.get_pos()[0])**2 + (self.rect.y - inventory.chest_button.get_pos()[1])**2) < desired_range**2
+        return ((self.rect.centerx - inventory.chest_button.rect.centerx)**2 + (self.rect.centery - inventory.chest_button.rect.centery)**2) < desired_range**2
 
     """
         Returns distance from player to specified chest
     """
     def distance_from_chest(self, chest: Inventory):
         if chest.chest_button:
-            return math.sqrt((self.rect.x - chest.chest_button.rect.x)**2 + (self.rect.y - chest.chest_button.rect.y)**2)
+            return math.sqrt((self.rect.centerx - chest.chest_button.rect.centerx)**2 + (self.rect.centery - chest.chest_button.rect.centery)**2)
 
     """
        Finds the nearest chest from a list of chests passed in 

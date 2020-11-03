@@ -22,7 +22,7 @@ running = True
 player = Player((WIDTH, HEIGHT))
 player_inventory = Inv(49, (1000, 70), 7, pygame.Color(0, 64, 0), pygame.Color(0, 128, 0), 'Carried Items')
 
-player_interact_range = 300
+player_interact_range = 200
 
 # List of all chests
 chests = []
@@ -31,7 +31,7 @@ pinned_chest = None
 # List of currently open chests (multi-chest access)
 open_chests = []
 # Vertical spacing of chest inventory UIs
-chest_inventory_spacing = 250
+chest_inventory_spacing = 265
 
 # If any inventory menus are open
 inventory_menu_open = False
@@ -52,7 +52,7 @@ bottom_wall = pygame.Rect((floor_rect.bottomleft[0], floor_rect.bottomleft[1] - 
 left_wall = pygame.Rect(floor_rect.topleft, (10, floor_rect.height))
 
 # Button for adding items
-item_source = Button(30, 150, (floor_rect.centerx-75, floor_rect.bottom-30), "Go forage", pygame.Color(139, 82, 45))
+item_source = Button(150, 50, (floor_rect.left-30, floor_rect.centery-75), "Go forage", pygame.Color(100, 50, 45))
 
 
 # test_bar = SearchBar(screen)
@@ -117,15 +117,18 @@ def update_open_chests(pinned: Inv):
 
 def draw_open_chest_indicators():
     for c in open_chests:
-        pygame.draw.line()
+        pygame.draw.line(screen, pygame.Color(255, 255, 0), c.get_pos(), c.chest_button.get_pos())
 
 
 # SCENE POPULATION -------------------------------------------------------------------------
 
-for i in range(0, 4):
-    pos = (120 + i * 110, 120)
-    size = (50, 100)
-    chests.append(create_chest(pos, size, "Chest " + str(i + 1)))
+
+size = (75, 150)
+chests.append(create_chest((120, 130), size, "Chest 1"))
+chests.append(create_chest((300, 130), size, "Chest 2"))
+
+chests.append(create_chest((120, 700), size, "Chest 3"))
+chests.append(create_chest((300, 700), size, "Chest 4"))
 
 #item1 = Item(0, "tool", "pickaxe", "This is a test", 10, (10, 10), "./Assets/pickaxe.png")
 # item1.set_highlight_color(pygame.Color(100, 100, 100))
@@ -272,9 +275,6 @@ while running:
         if pinned_chest:
             update_open_chests(pinned_chest)
 
-
-
-
     # --- Draw objects ---
 
     # Draw background
@@ -304,6 +304,9 @@ while running:
     if cursor_item:
         cursor_item.set_pos(pygame.mouse.get_pos())
         cursor_item.display(screen)
+
+    # Draw lines between chests and their inventories
+    draw_open_chest_indicators()
 
     pygame.display.update()
     clock.tick(60)
