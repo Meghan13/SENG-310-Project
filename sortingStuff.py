@@ -90,13 +90,35 @@ def sort_by_type(list):
 def sort_by_number(list):
     new_list = []
     null_num = remove_null(list)
-    while len(list) >= 1:
-        index = 0
-        for place in range(0, len(list)):
-            if list[place].get_num() < list[index].get_num():
-                index = place
-        new_list.append(list[index])
-        list.pop(index)
+
+    dictionary = {}
+    # count the total number of each item and stores as a dictionary
+    for item in range(0, len(list)):
+        if list[item].get_name() in dictionary:
+            dictionary[list[item].get_name()] += list[item].get_num()
+        else:
+            dictionary[list[item].get_name()] = list[item].get_num()
+    for x, y in dictionary.items():
+        print(x, y)
+
+    # perform insertion sort
+    while len(dictionary) >= 1:
+        # get the minimum item name
+        key_min = min(dictionary.keys(), key=(lambda k: dictionary[k]))
+        print(key_min, "min key", dictionary[key_min], "value")
+        pop_list = [] # store all places to pop
+        # add all instances of min item to front of the list
+        for item in range(0, len(list)):
+            if list[item].get_name() == key_min:
+                new_list.append(list[item])
+                pop_list.append(item)
+        # remove item from list
+        pop_list.sort(reverse = True)
+        for index in range(0, len(pop_list)):
+            list.pop(pop_list[index])
+        # remove key
+        dictionary.pop(key_min)
+
     # add nulls back
     for index in range(0, null_num):
         new_list.append(None)
